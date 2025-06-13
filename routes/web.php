@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KronologiController;
+use App\Http\Controllers\MasterProsesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:monitoring'])->group(function () {
     Route::get('/monitoring/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    Route::get('/masterproses', [MasterProsesController::class, 'index'])->name('masterproses.index');
 });
 
 // Boleh multi-role
@@ -52,4 +54,4 @@ Route::middleware(['auth', 'role:user,monitoring'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
