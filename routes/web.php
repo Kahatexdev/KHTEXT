@@ -35,13 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
-    Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
+    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
 });
 
-Route::middleware(['auth', 'role:monitoring'])->group(function () {
-    Route::get('/monitoring/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
+Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
+    Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
 });
 
