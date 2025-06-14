@@ -17,23 +17,23 @@
         <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
             <div class="flex items-center md:ml-auto md:pr-4">
                 <div class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
-                    
+
                 </div>
             </div>
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
                 <li class="flex items-center">
                     @auth
-                        <div class="relative">
-                            <button type="button" id="logoutTrigger" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500 hover:text-slate-700 focus:outline-none">
-                                <i class="fa fa-user sm:mr-1"></i>
-                                <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
-                            </button>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500 hover:text-slate-700">
+                    <div class="relative">
+                        <button type="button" id="logoutTrigger" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500 hover:text-slate-700 focus:outline-none">
                             <i class="fa fa-user sm:mr-1"></i>
-                            <span class="hidden sm:inline">Sign In</span>
-                        </a>
+                            <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
+                        </button>
+                    </div>
+                    @else
+                    <a href="{{ route('login') }}" class="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500 hover:text-slate-700">
+                        <i class="fa fa-user sm:mr-1"></i>
+                        <span class="hidden sm:inline">Sign In</span>
+                    </a>
                     @endauth
                 </li>
                 <li class="flex items-center pl-4 xl:hidden">
@@ -63,12 +63,12 @@
                 </svg>
             </button>
         </div>
-        
+
         <!-- Modal Body -->
         <div class="mb-6">
             <p class="text-gray-600">Are you sure you want to logout from your account?</p>
         </div>
-        
+
         <!-- Modal Footer -->
         <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
             <button type="button" id="cancelLogout" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors w-full sm:w-auto">
@@ -85,81 +85,81 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutTrigger = document.getElementById('logoutTrigger');
-    const logoutModal = document.getElementById('logoutModal');
-    const logoutModalContent = document.getElementById('logoutModalContent');
-    const cancelLogout = document.getElementById('cancelLogout');
-    const closeModalX = document.getElementById('closeModalX');
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutTrigger = document.getElementById('logoutTrigger');
+        const logoutModal = document.getElementById('logoutModal');
+        const logoutModalContent = document.getElementById('logoutModalContent');
+        const cancelLogout = document.getElementById('cancelLogout');
+        const closeModalX = document.getElementById('closeModalX');
 
-    // Function to show modal with animation
-    function showModal() {
-        if (logoutModal && logoutModalContent) {
-            logoutModal.classList.remove('hidden');
-            // Force reflow
-            logoutModal.offsetHeight;
-            // Add animation classes
-            logoutModalContent.classList.remove('scale-95', 'opacity-0');
-            logoutModalContent.classList.add('scale-100', 'opacity-100');
-            // Prevent body scroll
-            document.body.style.overflow = 'hidden';
+        // Function to show modal with animation
+        function showModal() {
+            if (logoutModal && logoutModalContent) {
+                logoutModal.classList.remove('hidden');
+                // Force reflow
+                logoutModal.offsetHeight;
+                // Add animation classes
+                logoutModalContent.classList.remove('scale-95', 'opacity-0');
+                logoutModalContent.classList.add('scale-100', 'opacity-100');
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            }
         }
-    }
 
-    // Function to hide modal with animation
-    function hideModal() {
-        if (logoutModal && logoutModalContent) {
-            logoutModalContent.classList.remove('scale-100', 'opacity-100');
-            logoutModalContent.classList.add('scale-95', 'opacity-0');
-            
-            // Wait for animation to complete before hiding
-            setTimeout(() => {
-                logoutModal.classList.add('hidden');
-                // Restore body scroll
-                document.body.style.overflow = '';
-            }, 300);
+        // Function to hide modal with animation
+        function hideModal() {
+            if (logoutModal && logoutModalContent) {
+                logoutModalContent.classList.remove('scale-100', 'opacity-100');
+                logoutModalContent.classList.add('scale-95', 'opacity-0');
+
+                // Wait for animation to complete before hiding
+                setTimeout(() => {
+                    logoutModal.classList.add('hidden');
+                    // Restore body scroll
+                    document.body.style.overflow = '';
+                }, 300);
+            }
         }
-    }
 
-    // Show modal when logout button is clicked
-    if (logoutTrigger) {
-        logoutTrigger.addEventListener('click', function(e) {
-            e.preventDefault();
-            showModal();
-        });
-    }
+        // Show modal when logout button is clicked
+        if (logoutTrigger) {
+            logoutTrigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                showModal();
+            });
+        }
 
-    // Hide modal when cancel button is clicked
-    if (cancelLogout) {
-        cancelLogout.addEventListener('click', function(e) {
-            e.preventDefault();
-            hideModal();
-        });
-    }
+        // Hide modal when cancel button is clicked
+        if (cancelLogout) {
+            cancelLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal();
+            });
+        }
 
-    // Hide modal when X button is clicked
-    if (closeModalX) {
-        closeModalX.addEventListener('click', function(e) {
-            e.preventDefault();
-            hideModal();
-        });
-    }
+        // Hide modal when X button is clicked
+        if (closeModalX) {
+            closeModalX.addEventListener('click', function(e) {
+                e.preventDefault();
+                hideModal();
+            });
+        }
 
-    // Hide modal when clicking outside the modal content
-    if (logoutModal) {
-        logoutModal.addEventListener('click', function(e) {
-            if (e.target === this) {
+        // Hide modal when clicking outside the modal content
+        if (logoutModal) {
+            logoutModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideModal();
+                }
+            });
+        }
+
+        // Hide modal when ESC key is pressed
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && logoutModal && !logoutModal.classList.contains('hidden')) {
                 hideModal();
             }
         });
-    }
-
-    // Hide modal when ESC key is pressed
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && logoutModal && !logoutModal.classList.contains('hidden')) {
-            hideModal();
-        }
     });
-});
 </script>
 @endauth
