@@ -16,7 +16,7 @@
     <div class="grow basis-full h-full overflow-y-auto px-4">
         <ul class="flex flex-col pl-0 mb-0">
             @php
-                $isDashboard = request()->routeIs('user.dashboard') || request()->routeIs('monitoring.dashboard');
+            $isDashboard = request()->routeIs('user.dashboard') || request()->routeIs('monitoring.dashboard');
             @endphp
 
             <li class="mt-0.5 w-full">
@@ -101,18 +101,36 @@
             <li class="mt-0.5 w-full">
 
                 <a href="{{ route('kronologi.index') }}"
-                   class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                    class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
                           {{ $isKronologi ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
                     <div
                         class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
                         {{ $isKronologi ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="9" stroke="#000000" stroke-width="2" fill="none"/>
-                            <path d="M12 7V12L15 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="9" stroke="#000000" stroke-width="2" fill="none" />
+                            <path d="M12 7V12L15 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Kronologi</span>
+                </a>
+            </li>
+
+            @php $isMasterProses = request()->routeIs('masterproses.index'); @endphp
+            <li class="mt-0.5 w-full">
+                <a href="{{ route('masterproses.index') }}"
+                    class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                          {{ $isMasterProses ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                    <div
+                        class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                        {{ $isMasterProses ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="9" stroke="#000000" stroke-width="2" fill="none" />
+                            <path d="M12 7V12L15 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Master Proses</span>
                 </a>
             </li>
 

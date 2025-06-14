@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KronologiController;
+use App\Http\Controllers\MasterProsesController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KategoriKronologiController;
 use App\Http\Controllers\AreaController;
@@ -46,11 +47,13 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    Route::resource('/masterproses', MasterProsesController::class);
     
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
 });
+
 
 // Boleh multi-role
 Route::middleware(['auth', 'role:user,monitoring'])->group(function () {
@@ -59,4 +62,4 @@ Route::middleware(['auth', 'role:user,monitoring'])->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
