@@ -10,7 +10,6 @@
                 <i class="fas fa-plus mr-2"></i> Tambah Proses
             </button>
         </div>
-
         <div class="px-6 py-4">
             @if($masterProses->count() > 0)
             <div class="overflow-x-auto">
@@ -90,9 +89,7 @@
     </div>
 </div>
 
-
 <!-- Modal Edit -->
-<!-- Modal Edit Proses -->
 <div id="editModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-30 backdrop-blur-sm" style="z-index: 99999;">
     <div id="editModalContent" class="bg-white rounded-lg shadow-xl p-6 w-11/12 max-w-md mx-4 transform transition-all duration-300 scale-95 opacity-0 relative" style="z-index: 100000;">
 
@@ -161,11 +158,21 @@
     </div>
 </div>
 
-
 @include('layouts.footer')
 @endsection
 
 @push('scripts')
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session("success") }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+</script>
+@endif
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const trigger = document.getElementById('tambahTrigger');
@@ -299,7 +306,4 @@
         });
     });
 </script>
-
-
-
 @endpush
