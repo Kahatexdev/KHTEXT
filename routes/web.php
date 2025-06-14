@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KronologiController;
 use App\Http\Controllers\MasterProsesController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\KategoriKronologiController;
+use App\Http\Controllers\AreaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +48,10 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
     Route::resource('/masterproses', MasterProsesController::class);
+    
+    Route::resource('pengumuman', PengumumanController::class);
+    Route::resource('kategori_kronologi', KategoriKronologiController::class);
+    Route::resource('area', AreaController::class);
 });
 
 
