@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->id('id_pengumuman');
-            $table->date('judul_pengumuman');
-            $table->date('isi_pengumuman');
+            $table->string('judul_pengumuman');
+            $table->text('isi_pengumuman');
             $table->string('gambar');
             $table->string('file_attachment');
             $table->timestamps();

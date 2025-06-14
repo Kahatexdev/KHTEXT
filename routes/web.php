@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KronologiController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\KategoriKronologiController;
+use App\Http\Controllers\AreaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +46,10 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    
+    Route::resource('pengumuman', PengumumanController::class);
+    Route::resource('kategori_kronologi', KategoriKronologiController::class);
+    Route::resource('area', AreaController::class);
 });
 
 // Boleh multi-role

@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class kategori_kronologi extends Model
 {
     use HasFactory;
+
+    protected $table = 'kategori_kronologi';
+    protected $primaryKey = 'id_kategori';
+    public $timestamps = true;
+
+    protected $fillable = [
+        'nama_kategori',
+        'ket_kategori',
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'id_kategori';
+    }
 }
