@@ -13,7 +13,7 @@
         <div class="px-6 py-4">
             @if($masterProses->count() > 0)
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <table id="masterProsesTable" class="min-w-full divide-y divide-gray-200 text-sm">
                     <thead class="bg-gray-50 text-gray-700">
                         <tr>
                             <th class="px-4 py-2 text-left">No</th>
@@ -174,6 +174,9 @@
 </script>
 @endif
 <script>
+    $(document).ready(function () {
+        $('#masterProsesTable').DataTable();
+    });
     document.addEventListener('DOMContentLoaded', function() {
         const trigger = document.getElementById('tambahTrigger');
         const modal = document.getElementById('tambahModal');
