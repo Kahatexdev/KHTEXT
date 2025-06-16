@@ -53,7 +53,7 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
-    Route::resource('flowproses', FlowProsesController::class);
+    Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
     Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
 });
 

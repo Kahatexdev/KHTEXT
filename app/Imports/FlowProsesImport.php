@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Facades\Log;
 
 class FlowProsesImport implements ToCollection, WithHeadingRow
 {
@@ -31,7 +32,7 @@ class FlowProsesImport implements ToCollection, WithHeadingRow
         $this->capacityStyles = $resp->successful()
             ? $resp->json('data', [])
             : [];
-            // dd ($this->capacityStyles);
+        // dd ($this->capacityStyles);
     }
 
     /**
@@ -40,47 +41,70 @@ class FlowProsesImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            // cari record di $capacityStyles yang matching semua kolom
-            $match = collect($this->capacityStyles)
-                ->first(function ($style) use ($row) {
-                    return $style['mastermodel'] === $row['no_model']
-                        && $style['factory']     === $row['area']
-                        && $style['size']        === $row['jc']
-                        && $style['inisial']     === $row['inisial'];
-                });
-                // dd ($match);
-            if (! $match) {
-                // Kalau gak ketemu, skip atau throw exception
-                // bisa juga log: \Log::warning("APS style not found for row", $row->toArray());
+            // Ambil dan bersihkan nilai kolom
+            $noModel = trim($row['no_model']);
+            $area    = trim($row['area']);
+            $inisial = trim($row['inisial'] ?? '');
+            $rawJc   = trim($row['jc']);
+            // dd ($row->toArray(), $noModel, $area, $inisial, $rawJc);
+
+            $params = [
+                'mastermodel' => $noModel,
+                'size'        => $row['jc'],
+                'factory'        => $area,
+            ];
+            // 1) Siapkan URL endpoint sesuai route di CodeIgniter
+            $base     = rtrim(config('services.capacity.base_url'), '/');
+            // Ganti '/api/getApsPerStyle' jika route Anda berbeda (misal '/getApsPerStyle')
+            $endpoint = $base . '/getApsPerStyles';
+            // dd ($endpoint, $params);
+            $resp = Http::get($endpoint, $params);
+            // dd ($resp->status(), $resp->body());
+            if (! $resp->successful()) {
+                Log::warning("Gagal fetch APS untuk {$noModel}/{$area}/{$rawJc}", [
+                    'status' => $resp->status(),
+                    'body'   => $resp->body(),
+                ]);
                 continue;
             }
 
-            // dapatkan idapsperstyle
+            // 3) Ambil data dan cari match jika perlu
+            $data = $resp->json();
+            // dd ($data);
+            $match = is_array($data)
+                ? collect($data)->first(fn($item) => $inisial === '' || (($item['inisial'] ?? '') === $inisial))
+                : $data;
+
+           
+
             $apsStyleId = $match['idapsperstyle'];
             // dd ($apsStyleId);
-            // 1) firstOrCreate Flow (header)
+            // 4) Buat atau ambil header main_flowproses
             $flow = main_flowproses::firstOrCreate([
                 'idapsperstyle' => $apsStyleId,
-                'tanggal'      => $this->importDate,
-                'area'         => $row['area'],
-                'id_user'      => auth()->id(),
+                'tanggal'       => $this->importDate,
+                'area'          => $area,
+                'id_user'       => auth()->id(),
             ]);
 
-            // 2) Loop kolom proses_1 .. proses_15 (atau sesuaikan)
-            for ($i = 1; $i <= 15; $i++) {
-                $col = 'proses_' . $i;
-                if (! empty($row[$col])) {
-                    // Cari atau buat master process
-                    $mp = master_proses::firstOrCreate([
-                        'nama_proses' => $row[$col],
-                    ]);
+            // (Optional) Hapus proses lama jika perlu reset
+            // flow_proses::where('id_main_flow', $flow->id_main_flow)->delete();
 
-                    flow_proses::create([
-                        'id_main_flow'           => $flow->id_main_flow,
-                        'id_master_proses' => $mp->id_master_proses,
-                        'step_order'        => $i,
-                    ]);
+            // 5) Simpan proses langkah demi langkah
+            for ($i = 1; $i <= 15; $i++) {
+                $col  = 'proses_' . $i;
+                $nama = trim($row[$col] ?? '');
+                if ($nama === '') {
+                    continue;
                 }
+
+                $mp = master_proses::firstOrCreate(['nama_proses' => $nama]);
+
+                flow_proses::create([
+                    'id_main_flow'     => $flow->id_main_flow,
+                    'id_master_proses' => $mp->id_master_proses,
+                    'step_order'       => $i,
+                ]);
             }
         }
     }
