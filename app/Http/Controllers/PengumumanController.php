@@ -36,6 +36,7 @@ class PengumumanController extends Controller
 
     public function edit(Pengumuman $pengumuman)
     {
+        // dd ($pengumuman);
         return response()->json($pengumuman);
     }
 

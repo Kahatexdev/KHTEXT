@@ -20,10 +20,7 @@ class main_flowproses extends Model
         'area',
         'id_user',
     ];
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
+
     public function getRouteKeyName()
     {
         return 'id_main_flow';
