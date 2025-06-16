@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterProsesController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KategoriKronologiController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\FlowProsesController;
 use App\Http\Controllers\TbCekqtyController;
 use App\Http\Controllers\TbCekqtyRossetController;
 use App\Models\User;
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
+    Route::resource('flowproses', FlowProsesController::class);
+    Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
     Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
         ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
 });
