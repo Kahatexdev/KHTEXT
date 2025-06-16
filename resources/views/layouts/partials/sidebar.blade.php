@@ -115,6 +115,25 @@
                 <h6 class="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-60">MENU</h6>
             </li>
 
+            @php $isFlowProses = request()->routeIs('flowproses.index'); @endphp
+            <li class="mt-0.5 w-full">
+                <a href="{{ route('flowproses.index') }}"
+                    class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                          {{ $isFlowProses ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                    <div
+                        class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                        {{ $isFlowProses ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16.5 9H7.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16.5 12H7.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16.5 15H7.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Flow Proses</span>
+                </a>
+            </li>
             @php $isKronologi = request()->routeIs('kronologi.index'); @endphp
             <li class="mt-0.5 w-full">
 

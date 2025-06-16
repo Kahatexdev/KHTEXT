@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('main_flowproses', function (Blueprint $table) {
             $table->id('id_main_flow');
-            $table->foreignId('id_pdk')->references('id_pdk')->on('tb_pdk')->onDelete('cascade');
+            // $table->foreignId('id_pdk')->references('id_pdk')->on('tb_pdk')->onDelete('cascade');
+            $table->string('idapsperstyle', 25); // from capacity
             $table->date('tanggal');
             $table->string('ket')->nullable();
+            $table->string('area', 50)->nullable();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

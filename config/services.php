@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'capacity' => [
+        'base_url' => env('CAPACITY_API_BASE_URL'),
+        'key'      => env('CAPACITY_API_KEY'),
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

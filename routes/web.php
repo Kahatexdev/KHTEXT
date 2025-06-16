@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterProsesController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KategoriKronologiController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\FlowProsesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,6 +53,8 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
+    Route::resource('flowproses', FlowProsesController::class);
+    Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
 });
 
 
