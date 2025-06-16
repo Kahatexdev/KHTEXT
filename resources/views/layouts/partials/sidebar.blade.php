@@ -1,3 +1,9 @@
+@php
+    $user      = auth()->user();
+    $role      = $user->role;             // "user" atau "monitoring"
+    $bagian    = $user->bagian_area;      // "rosso", "gudang", dll.
+    $parts     = ['rosso','setting','gudang','handprint','jahit','perbaikan'];
+@endphp
 <!-- Sidebar -->
 <aside
     class="max-w-62.5 ease-nav-brand z-40 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
@@ -101,13 +107,30 @@
                     <div
                         class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
                         {{ $isMasterProses ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="9" stroke="#000000" stroke-width="2" fill="none" />
-                            <path d="M12 7V12L15 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2"/>
+                            <path d="M21 12C21 13.66 16.97 15 12 15S3 13.66 3 12" stroke="currentColor" stroke-width="2"/>
+                            <path d="M3 5V19C3 20.66 7.03 22 12 22S21 20.66 21 19V5" stroke="currentColor" stroke-width="2"/>
+                          </svg>
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Master Proses</span>
+                </a>
+            </li>
+
+            @php $isUsers = request()->routeIs('users.index'); @endphp
+            <li class="mt-0.5 w-full">
+                <a href="{{ route('users.index') }}"
+                    class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                          {{ $isUsers ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                    <div
+                        class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                        {{ $isUsers ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Users</span>
                 </a>
             </li>
 
@@ -172,6 +195,51 @@
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Pengumuman</span>
                 </a>
             </li>
+
+            @if($role === 'monitoring')
+            @foreach($parts as $p)
+              @php $isActive = request()->is("$role/$p"); @endphp
+              <li class="mt-0.5 w-full">
+                <a href="{{ url("$role/$p") }}"
+                   class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                          {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                  <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                        {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"stroke-linejoin="round"/>
+                            <path d="M21 20V8L15 12V20H21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                  </div>
+                  <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">{{ ucfirst($p) }}</span>
+                </a>
+              </li>
+            @endforeach
+    
+          @elseif($role === 'user')
+            @php $isActive = request()->is("$role/$bagian"); @endphp
+            <li class="mt-0.5 w-full">
+              <a href="{{ url("$role/$bagian") }}"
+                 class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                        {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                    {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 20V8L15 12V20H21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                </div>
+                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">{{ ucfirst($bagian) }}</span>
+              </a>
+            </li>
+          @endif
         </ul>
     </div>
 

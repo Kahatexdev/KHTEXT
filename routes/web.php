@@ -8,6 +8,9 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KategoriKronologiController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\FlowProsesController;
+use App\Http\Controllers\TbCekqtyController;
+use App\Http\Controllers\TbCekqtyRossetController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,20 +44,25 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
-    Route::get('/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/dashboard', [UserController::class, 'indexUser'])->name('user.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
+    Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
 });
 
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
     Route::resource('/masterproses', MasterProsesController::class);
-    
+    Route::resource('/users', UserController::class);
+
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
     Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
     Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
+    Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
 });
 
 
