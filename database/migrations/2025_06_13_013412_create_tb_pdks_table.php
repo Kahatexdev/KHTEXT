@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tb_pdk', function (Blueprint $table) {
             $table->id('id_pdk');
-            $table->string('no_model', 25);
-            $table->string('area', 25);
-            $table->string('jc', 100);
+            $table->string('mastermodel', 25); // no_model
+            $table->string('factory', 25);     // area
+            $table->string('size', 100);       // jc
             $table->string('inisial', 25);
-            $table->string('keterangan');
-            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
+            $table->text('keterangan')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

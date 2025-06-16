@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_main_flow');
             $table->foreignId('id_pdk')->references('id_pdk')->on('tb_pdk')->onDelete('cascade');
             $table->date('tanggal');
-            $table->string('ket');
+            $table->string('ket')->nullable();
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

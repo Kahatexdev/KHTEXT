@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('flow_proses', function (Blueprint $table) {
             $table->id('id_flow_proses');
-            $table->foreignId('id_master_proses')->references('id_master_proses')->on('master_proses')->onDelete('cascade');
             $table->foreignId('id_main_flow')->references('id_main_flow')->on('main_flowproses')->onDelete('cascade');
+            $table->foreignId('id_master_proses')->references('id_master_proses')->on('master_proses')->onDelete('cascade');
+            $table->integer('step_order')->default(1); // urutan proses 1..6
+            $table->timestamps();
         });
     }
 
