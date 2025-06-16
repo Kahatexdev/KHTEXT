@@ -5,7 +5,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b">
-            <h2 class="text-lg font-semibold text-gray-800">Master Proses</h2>
+            <h2 class="text-lg font-bold">Master Proses</h2>
             <button id="tambahTrigger" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium">
                 <i class="fas fa-plus mr-2"></i> Tambah Proses
             </button>
