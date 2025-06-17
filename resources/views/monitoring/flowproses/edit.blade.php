@@ -21,8 +21,9 @@
   </div>
 
   {{-- Form update many detail --}}
-  <form action="{{ route('flowproses.update', ['flowprose' => $mainFlowproses->id_main_flow]) }}" method="POST" class="space-y-6">
-    @csrf @method('PUT')
+  <form action="{{ route('flowproses.update', ['main_flowproses' => $mainFlowproses->id_main_flow]) }}" method="POST" class="space-y-6">
+  @csrf
+  @method('PUT')
 
     <div class="bg-white shadow-lg rounded-2xl p-6">
       <h3 class="text-lg font-semibold mb-4">Detail Proses</h3>

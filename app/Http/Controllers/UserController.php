@@ -23,7 +23,6 @@ class UserController extends Controller
     {
         return view('monitoring.dashboard');
     }
-
     public function indexUser()
     {
         return view('user.dashboard');

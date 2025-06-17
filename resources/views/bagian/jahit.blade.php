@@ -1,14 +1,40 @@
 @extends('layouts.app')
-@section('title', 'Bagian Gudang')
+@section('title', 'Bagian Jahit')
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+        @if (session('warning'))
+            <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4"
+                role="alert">
+                <strong class="font-bold">Warning!</strong>
+                <span class="block sm:inline">{{ session('warning') }}</span>
+            </div>
+        @endif
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b">
-            <h2 class="text-xl font-bold">User Gudang</h2>
+            <h2 class="text-xl font-bold">User Jahit</h2>
         </div>
         <div class="px-6 py-4">
-            <form action="">
+            @if (Auth::user()->role == 'monitoring')
+            <form action="{{ route('jahit.storeJahit', ['bagian' => 'jahit']) }}" method="POST"
+                class="space-y-4">
+            @elseif(Auth::user()->role == 'user')
+                <form action="{{ route('user.jahit.storeJahit', ['bagian' => 'jahit']) }}"
+                    method="POST" class="space-y-4">
+        @endif
+        @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="tanggalCrossCheck" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
@@ -16,17 +42,16 @@
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
-                        <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Packing</label>
+                        <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Area</label>
                         <select name="area" id="area"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
-                            <option value="">Pilih Packing</option>
-                            <option value="PK1">PK1</option>
-                            <option value="PK2">PK2</option>
-                            <option value="PK5">PK5</option>
-                            <option value="PK7">PK7</option>
-                            <option value="PK8">PK8</option>
-                            <option value="PK11">PK11</option>
-                            <option value="PKIDP">PKIDP</option>
+                            <option value="">Pilih Area</option>
+                            <option value="KK1">KK1</option>
+                            <option value="KK2">KK2</option>
+                            <option value="KK5">KK5</option>
+                            <option value="KK7">KK7</option>
+                            <option value="KK8">KK8</option>
+                            <option value="KK11">KK11</option>
                         </select>
                     </div>
                     <div>
@@ -48,8 +73,8 @@
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
-                        <label for="aktual_permintaan_packing" class="block text-sm font-medium text-gray-700 mb-1">Aktual Permintaan Packing</label>
-                        <input type="number" id="aktual_permintaan_packing" name="aktual_permintaan_packing"
+                        <label for="smv" class="block text-sm font-medium text-gray-700 mb-1">SMV</label>
+                        <input type="number" id="smv" name="smv"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                 </div>
@@ -62,7 +87,7 @@
                     </div>
                     <div>
                         <label for="persamaan" class="block text-sm font-medium text-gray-700 mb-1">Persamaan</label>
-                        <input type="number" id="persamaan" name="persamaan"
+                        <input type="text" id="persamaan" name="persamaan"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" readonly>
                     </div>
                     <div>
@@ -71,13 +96,13 @@
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                     <div>
-                        <label for="keterangan_smv" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Aktual</label>
+                        <label for="keterangan_smv" class="block text-sm font-medium text-gray-700 mb-1">Keterangan SMV</label>
                         <textarea name="keterangan_smv" id="keterangan_smv" cols="30" rows="3"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                 </div>
 
-                <h4 class="font-semibold text-slate-900 mt-3">Qty Reject & Rework</h4>
+                <h4 class="font-semibold text-slate-900 mt-3">Reject & Rework ERP</h4>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label for="qty_reject" class="block text-sm font-medium text-gray-700 mb-1">Qty Reject</label>
@@ -99,20 +124,15 @@
                         <input type="number" id="jalan_mesin" name="jalan_mesin"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
-                    
-                </div>
-
-                <h4 class="font-semibold text-slate-900 mt-3">Overshift</h4>
-                <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label for="keterangan_reject" class="block text-sm font-medium text-gray-700 mb-1">Dari Pagi</label>
+                        <label for="keterangan_reject" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Reject</label>
                         <textarea name="keterangan_reject" id="keterangan_reject" cols="30" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
+                                  class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                     <div>
-                        <label for="keterangan_rework" class="block text-sm font-medium text-gray-700 mb-1">Dari Siang</label>
+                        <label for="keterangan_rework" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Rework</label>
                         <textarea name="keterangan_rework" id="keterangan_rework" cols="30" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
+                                  class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                 </div>
                 <div class="mt-4">
@@ -129,4 +149,25 @@
 @endsection
 
 @push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const erpInput = document.getElementById('erp');
+        const smvInput = document.getElementById('smv');
+        const selisihInput = document.getElementById('selisih');
+        const persamaanInput = document.getElementById('persamaan');
+        var hasilPersentaseMis = 0;
+
+        function calculateSelisih() {
+            const erpValue = parseFloat(erpInput.value) || 0;
+            const smvValue = parseFloat(smvInput.value) || 0;
+            selisihInput.value = smvValue - erpValue;
+            hasilPersentaseMis = (erpValue / smvValue) * 100 || 0;
+            persamaanInput.value = hasilPersentaseMis.toFixed(2) + '%';
+        }
+        erpInput.addEventListener('input', calculateSelisih);
+        smvInput.addEventListener('input', calculateSelisih);
+        calculateSelisih(); // Initial calculation
+
+    });
+</script>
 @endpush

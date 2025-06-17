@@ -46,8 +46,47 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexUser'])->name('user.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
-    Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    // Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
+    //     ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    // 1) First, capture the dynamic “bagian” (rosso, setting, etc):
+    Route::prefix('{bagian}')
+        ->whereIn('bagian', [
+            'mesin',
+            'rosso',
+            'setting',
+            'gudang',
+            'handprint',
+            'jahit',
+            'perbaikan'
+        ])
+        ->group(function () {
+
+            // 2) Now register your resource under that:
+            Route::resource('cekqty_rosset', TbCekqtyRossetController::class)
+                // rename the {cekqty_rosset} param to {rosset}
+                ->parameters(['cekqty_rosset' => 'rosset'])
+                // optionally give all your route names here
+                ->names([
+                    'index'   => 'cekqty_rosset.index',
+                    'show'    => 'cekqty_rosset.show',
+                    'create'  => 'cekqty_rosset.create',
+                    'store'   => 'cekqty_rosset.store',
+                    'edit'    => 'cekqty_rosset.edit',
+                    'update'  => 'cekqty_rosset.update',
+                    'destroy' => 'cekqty_rosset.destroy',
+                ]);
+        });
+    Route::post('/setting/storeSetting/{bagian}', [TbCekqtyRossetController::class, 'storeSetting'])
+        ->name('user.setting.storeSetting');
+    Route::post('gudang/storeGudang/{bagian}', [TbCekqtyRossetController::class, 'storeGudang'])
+        ->name('user.gudang.storeGudang');
+    Route::post('handprint/storeHandprint/{bagian}', [TbCekqtyRossetController::class, 'storeHandprint'])
+        ->name('user.handprint.storeHandprint');
+    Route::post('jahit/storeJahit/{bagian}', [TbCekqtyRossetController::class, 'storeJahit'])
+        ->name('user.jahit.storeJahit');
+    Route::post('perbaikan/storePerbaikan/{bagian}', [TbCekqtyRossetController::class, 'storePerbaikan'])
+        ->name('user.perbaikan.storePerbaikan');
+
     Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
@@ -62,8 +101,34 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('area', AreaController::class);
     Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
     Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
-    Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    // Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
+    //     ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    Route::prefix('{bagian}')
+        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->group(function () {
+            Route::resource('tb_cekqty_rosset', TbCekqtyRossetController::class)
+                ->parameters(['tb_cekqty_rosset' => 'rosset'])
+                ->names([
+                    'index'   => 'tb_cekqty_rosset.index',
+                    'show'    => 'tb_cekqty_rosset.show',
+                    'create'  => 'tb_cekqty_rosset.create',
+                    'store'   => 'tb_cekqty_rosset.store',
+                    'edit'    => 'tb_cekqty_rosset.edit',
+                    'update'  => 'tb_cekqty_rosset.update',
+                    'destroy' => 'tb_cekqty_rosset.destroy',
+                ]);
+        });
+    Route::post('/setting/storeSetting/{bagian}', [TbCekqtyRossetController::class, 'storeSetting'])
+        ->name('setting.storeSetting');
+    Route::post('gudang/storeGudang/{bagian}', [TbCekqtyRossetController::class, 'storeGudang'])
+        ->name('gudang.storeGudang');
+    Route::post('handprint/storeHandprint/{bagian}', [TbCekqtyRossetController::class, 'storeHandprint'])
+        ->name('handprint.storeHandprint');
+    Route::post('jahit/storeJahit/{bagian}', [TbCekqtyRossetController::class, 'storeJahit'])
+        ->name('jahit.storeJahit');
+    Route::post('perbaikan/storePerbaikan/{bagian}', [TbCekqtyRossetController::class, 'storePerbaikan'])
+        ->name('perbaikan.storePerbaikan');
+
     Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 

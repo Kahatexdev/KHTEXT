@@ -378,7 +378,3 @@
         /* Add any custom CSS here if needed */
     </style>
 @endsection
-@section('livewire')
-    @livewireStyles
-    @livewireScripts
-@endsection

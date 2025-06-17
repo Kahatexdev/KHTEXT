@@ -449,6 +449,10 @@
     </div>
 </div>
 
+
+@include('layouts.footer')
+@endsection
+@push('styles')
 {{-- Custom Styles for enhanced visual appeal --}}
 <style>
     @keyframes pulse-success {
@@ -501,8 +505,6 @@
         background: #94a3b8;
     }
     </style>
-@include('layouts.footer')
-@endsection
-
+    @endpush
 @push('scripts')
 @endpush
