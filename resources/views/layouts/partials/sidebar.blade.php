@@ -2,7 +2,7 @@
     $user      = auth()->user();
     $role      = $user->role;             // "user" atau "monitoring"
     $bagian    = $user->bagian_area;      // "rosso", "gudang", dll.
-    $parts     = ['rosso','setting','gudang','handprint','jahit','perbaikan'];
+    $bagianArea     = ['rosso','setting','gudang','handprint','jahit','perbaikan'];
 @endphp
 <!-- Sidebar -->
 <aside
@@ -196,14 +196,19 @@
                 </a>
             </li>
 
-            @if($role === 'monitoring')
-            @foreach($parts as $p)
-              @php $isActive = request()->is("$role/$p"); @endphp
-              <li class="mt-0.5 w-full">
-                <a href="{{ url("$role/$p") }}"
-                   class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
-                          {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
-                  <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+            {{-- MONITORING: loop semua --}}
+    @if($role === 'monitoring')
+    @foreach(array_merge(['mesin'], $bagianArea) as $p)
+        @php $isActive = request()->is("$role/$p*"); @endphp
+
+        @if($p === 'mesin')
+            {{-- Dropdown Mesin --}}
+            <li class="mt-0.5 w-full group relative">
+                
+                <button class="w-full py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                    {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                    {{-- icon mesin --}}
+                    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg
                         {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"stroke-linejoin="round"/>
@@ -213,33 +218,103 @@
                             <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                  </div>
-                  <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">{{ ucfirst($p) }}</span>
-                </a>
-              </li>
-            @endforeach
-    
-          @elseif($role === 'user')
-            @php $isActive = request()->is("$role/$bagian"); @endphp
+                    </div>
+                    <span class="ml-1">Mesin</span>
+                    <svg class="ml-auto h-4 w-4 group-hover:rotate-180 transition-transform" fill="none"
+                         stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <ul class="absolute left-0 ml-10 hidden group-hover:block bg-white border shadow-lg rounded-lg w-48">
+                    <li><a href="{{ url("$role/mesin") }}"
+                           class="block px-4 py-2 text-sm hover:bg-gray-100
+                           {{ request()->is("$role/mesin") ? 'font-semibold bg-gray-100' : '' }}">
+                           Input Perbandingan
+                        </a>
+                    </li>
+                    <li><a href="{{ url("$role/mesin/input_erp") }}"
+                           class="block px-4 py-2 text-sm hover:bg-gray-100
+                           {{ request()->is("$role/mesin/input_erp") ? 'font-semibold bg-gray-100' : '' }}">
+                           Report Jam Selesai Input
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @else
+            {{-- Menu biasa --}}
             <li class="mt-0.5 w-full">
-              <a href="{{ url("$role/$bagian") }}"
-                 class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
-                        {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
-                <div class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
+                <a href="{{ url("$role/$p") }}"
+                   class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                          {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                    <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg
+                        {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"stroke-linejoin="round"/>
+                            <path d="M21 20V8L15 12V20H21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="ml-1">{{ ucfirst($p) }}</span>
+                </a>
+            </li>
+        @endif
+    @endforeach
+
+{{-- USER: hanya 1 sesuai bagian_area --}}
+@elseif($role === 'user')
+    @if($bagian === 'mesin')
+        {{-- Dropdown Mesin (sama seperti di atas) --}}
+        @php $isActive = request()->is("$role/mesin*"); @endphp
+        <li class="mt-0.5 w-full group relative">
+            <button class="w-full py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors
+                {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg
                     {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"stroke-linejoin="round"/>
                         <path d="M21 20V8L15 12V20H21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                    </svg>
                 </div>
-                <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">{{ ucfirst($bagian) }}</span>
-              </a>
-            </li>
-          @endif
+                <span class="ml-1">Mesin</span>
+                <svg class="ml-auto h-4 w-4 group-hover:rotate-180 transition-transform" fill="none"
+                     stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <ul class="absolute left-0 ml-10 hidden group-hover:block bg-white border shadow-lg rounded-lg w-48">
+                <li><a href="{{ url("$role/mesin") }}"
+                       class="block px-4 py-2 text-sm hover:bg-gray-100
+                       {{ request()->is("$role/mesin") ? 'font-semibold bg-gray-100' : '' }}">
+                       Input Perbandingan
+                    </a>
+                </li>
+                <li><a href="{{ url("$role/mesin/input_erp") }}"
+                       class="block px-4 py-2 text-sm hover:bg-gray-100
+                       {{ request()->is("$role/mesin/input_erp") ? 'font-semibold bg-gray-100' : '' }}">
+                       Report Jam Selesai Input
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @else
+        {{-- Button biasa untuk 1 bagian --}}
+        @php $isActive = request()->is("$role/$bagian"); @endphp
+        <li class="mt-0.5 w-full">
+            <a href="{{ url("$role/$bagian") }}"
+               class="py-2.7 text-sm flex items-center px-4 transition-colors
+                      {{ $isActive ? 'shadow-soft-xl rounded-lg bg-white font-semibold text-slate-700' : '' }}">
+                <div class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg
+                    {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
+                    {{-- SVG icon {{ $bagian }} --}}
+                </div>
+                <span class="ml-1">{{ ucfirst($bagian) }}</span>
+            </a>
+        </li>
+    @endif
+@endif
         </ul>
     </div>
 

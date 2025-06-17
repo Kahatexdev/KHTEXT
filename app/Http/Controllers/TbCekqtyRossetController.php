@@ -30,4 +30,9 @@ class TbCekqtyRossetController extends Controller
 
         abort(403, 'Akses hanya untuk bagian: ' . $this->bagianArea);
     }
+
+    public function inputErp()
+    {
+        return view($this->role . '.bagian.input-erp');
+    }
 }

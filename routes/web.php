@@ -47,7 +47,8 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexUser'])->name('user.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
     Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
-        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
@@ -62,7 +63,8 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
     Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
     Route::get('{bagian}', [TbCekqtyRossetController::class, 'loadByBagian'])
-        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']);
+    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
 
