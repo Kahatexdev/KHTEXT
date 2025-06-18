@@ -36,13 +36,12 @@ class CapacityService
         ])->timeout(10)    // timeout 10 detik
             ->get($url, [
                 'no_model' => $noModel,
-                'size'     => $size,
-                'area'     => $area,
+                'size'     => $size ?? null,
+                'area'     => $area ?? null,
             ]);
 
         // Jika status bukan 2xx, lempar exception
         $response->throw();
-
         // Ambil data key `data` atau kembalikan array kosong
         return $response->json('data', []);
     }

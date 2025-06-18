@@ -36,7 +36,7 @@
                     @foreach ($data as $item)
                         <tr>
                             <td class="px-6 py-4 text-sm text-gray-700">
-                                {{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
+                                {{ $loop->iteration + 1 }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->nama_kategori }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700">{{ $item->ket_kategori }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 text-right space-x-2">
@@ -59,10 +59,6 @@
                     @endforeach
                 </tbody>
             </table>
-
-            <div class="p-4 border-t">
-                {{ $data->links() }}
-            </div>
         </div>
     </div>
 
@@ -111,6 +107,9 @@
 
 @push('scripts')
     <script>
+        $(document).ready(function () {
+        $('#kategoriTable').DataTable();
+    });
         $(function() {
             const overlay = $('#modalOverlay');
             const form = $('#kategoriForm')[0];
@@ -294,27 +293,6 @@
                 });
             });
 
-            // Initialize modern DataTable
-            $('#kategoriTable').DataTable({
-                responsive: true,
-                pageLength: 10,
-                lengthMenu: [10, 25, 50, 100],
-                language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ data per halaman",
-                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
-                    infoFiltered: "(difilter dari _MAX_ total data)",
-                    paginate: {
-                        first: "Pertama",
-                        last: "Terakhir",
-                        next: "Selanjutnya",
-                        previous: "Sebelumnya"
-                    },
-                    emptyTable: "Tidak ada data yang tersedia",
-                    zeroRecords: "Tidak ada data yang cocok ditemukan"
-                },
-            });
         });
     </script>
 @endpush
