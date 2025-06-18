@@ -30,7 +30,14 @@ class tb_cekqty_rosset extends Model
         'shift',
         'id_user'
     ];
-    protected $primaryKey = 'id_cekqty_rosset ';
+    protected $primaryKey = 'id_cekqty_rosset';
     public $timestamps = true;
     
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+
 }

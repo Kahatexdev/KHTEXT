@@ -43,4 +43,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function tbCekqtyRosset()
+    {
+        return $this->hasMany(tb_cekqty_rosset::class, 'id_user');
+    }
+    public function tbCekqty()
+    {
+        return $this->hasMany(tb_cekqty::class, 'id_user');
+    }
 }
