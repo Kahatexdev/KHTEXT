@@ -47,29 +47,56 @@
                 </div>
             </div>
 
-            
-            <h4 class="font-semibold text-slate-900 mt-4">PERHATIKAN <strong>AM & PM</strong> SAAT PENGINPUTAN WAKTU</h4>
+            <div class="mt-3">
+                <div class="relative bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="animate-pulse">
+                            <i class="fas fa-clock text-red-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-red-700 text-sm">
+                                <span class="font-medium">Perhatikan</span>
+                                <span class="inline-block bg-red-200 text-red-800 px-2 py-1 rounded-md text-xs font-bold">
+                                    AM & PM
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+                <div class=" mt-2">
+                    <label for="start_input" class="block text-sm font-medium text-gray-700 mb-1">Start Input</label>
+                    <input type="time" id="start_input" name="start_input"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                </div>
+                <div class=" mt-2">
+                    <label for="stop_input" class="block text-sm font-medium text-gray-700 mb-1">Stop Input</label>
+                    <input type="time" id="stop_input" name="stop_input"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                </div>
+                <div class=" mt-2">
+                    <label for="total_mc" class="block text-sm font-medium text-gray-700 mb-1">Total MC</label>
+                    <input type="text" id="total_mc" name="total_mc"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                </div>
+            </div>
             <div class="grid grid-cols-2 gap-2">
-                <div>
-                    <label for="selisih" class="block text-sm font-medium text-gray-700 mb-1">Qty Reject</label>
-                    <input type="number" id="selisih" name="selisih"
+                <div class=" mt-2">
+                    <label for="jalan_mc" class="block text-sm font-medium text-gray-700 mb-1">Jalan MC</label>
+                    <input type="text" id="jalan_mc" name="jalan_mc"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
-                <div>
-                    <label for="persamaan" class="block text-sm font-medium text-gray-700 mb-1">Qty Rework</label>
-                    <input type="number" id="persamaan" name="persamaan"
+                <div class=" mt-2">
+                    <label for="prod_erp" class="block text-sm font-medium text-gray-700 mb-1">Prod ERP</label>
+                    <input type="text" id="prod_erp" name="prod_erp"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
-                <div>
-                    <label for="keterangan_reject" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Reject</label>
-                    <textarea name="keterangan_reject" id="keterangan_reject" cols="30" rows="3"
-                              class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
-                </div>
-                <div>
-                    <label for="keterangan_rework" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Rework</label>
-                    <textarea name="keterangan_rework" id="keterangan_rework" cols="30" rows="3"
-                              class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
-                </div>
+            </div>
+            <div class=" mt-2">
+                <label for="keterangan_erp" class="block text-sm font-medium text-gray-700 mb-1">Keterangan ERP</label>
+                <textarea name="keterangan_erp" id="keterangan_erp" cols="30" rows="3"
+                          class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
             </div>
             <div class="mt-4">
                 <button type="submit"
@@ -82,58 +109,6 @@
     </div>
 </div>
 
-{{-- Custom Styles for enhanced visual appeal --}}
-<style>
-    @keyframes pulse-success {
-        0%, 100% {
-            background-color: rgb(220 252 231);
-        }
-        50% {
-            background-color: rgb(187 247 208);
-        }
-    }
-    
-    @keyframes pulse-warning {
-        0%, 100% {
-            background-color: rgb(254 249 195);
-        }
-        50% {
-            background-color: rgb(253 230 138);
-        }
-    }
-    
-    .animate-pulse-success {
-        animation: pulse-success 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    .animate-pulse-warning {
-        animation: pulse-warning 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    /* Smooth transitions for interactive elements */
-    .transition-all {
-        transition: all 0.3s ease-in-out;
-    }
-    
-    /* Custom scrollbar for table */
-    .overflow-x-auto::-webkit-scrollbar {
-        height: 8px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 4px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
-    </style>
 @include('layouts.footer')
 @endsection
 

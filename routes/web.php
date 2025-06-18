@@ -94,7 +94,6 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
-
 // Boleh multi-role
 Route::middleware(['auth', 'role:user,monitoring'])->group(function () {
     Route::get('/shared', function () {
