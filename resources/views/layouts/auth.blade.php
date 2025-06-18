@@ -20,7 +20,7 @@
     @if(file_exists(public_path('build/manifest.json')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
-        <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/assets/css/app.css') }}" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
     @endif
     
