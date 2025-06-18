@@ -50,7 +50,7 @@ class TbCekqtyRossetController extends Controller
         // Validasi bagian yang diizinkan
         // validasi bagian
         $allowedBagian = Auth::user()->role === 'monitoring'
-            ? ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
+            ? ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
             : [Auth::user()->bagian_area];
 
         if (! in_array($bagian, $allowedBagian)) {
@@ -124,10 +124,10 @@ class TbCekqtyRossetController extends Controller
     public function dataByBagian(string $bagian)
     {
         // Validasi bagian yang diizinkan
-        $allowedBagian = ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
+        $allowedBagian = ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
         // jika role monitoring, izinkan semua bagian
         if (Auth::user()->role === 'monitoring') {
-            $allowedBagian = ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
+            $allowedBagian = ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
         } else if (Auth::user()->role === 'user') {
             // jika role user, hanya izinkan bagian sesuai bagian_area user
             $allowedBagian = [Auth::user()->bagian_area];
@@ -157,7 +157,7 @@ class TbCekqtyRossetController extends Controller
     {
         // validasi bagian
         $allowed = Auth::user()->role === 'monitoring'
-            ? ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
+            ? ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
             : [Auth::user()->bagian_area];
 
         if (! in_array($bagian, $allowed)) {
@@ -178,7 +178,7 @@ class TbCekqtyRossetController extends Controller
         // dd (Auth::user()->role, $bagian, $request->all());
         // validasi bagian
         $allowed = Auth::user()->role === 'monitoring'
-            ? ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
+            ? ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
             : [Auth::user()->bagian_area];
 
         if (! in_array($bagian, $allowed)) {
@@ -227,7 +227,7 @@ class TbCekqtyRossetController extends Controller
     {
         // validasi bagian
         $allowed = Auth::user()->role === 'monitoring'
-            ? ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
+            ? ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan']
             : [Auth::user()->bagian_area];
 
         if (! in_array($bagian, $allowed)) {

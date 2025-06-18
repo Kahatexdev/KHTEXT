@@ -43,10 +43,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('reportData', [TbCekqtyRossetController::class, 'reportData'])->name('monitoring.reportData');
     Route::get('reportData/{bagian}', [TbCekqtyRossetController::class, 'dataByBagian'])
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->name('reportDatabyBagian');
     Route::prefix('{bagian}')
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->group(function () {
             Route::resource('tb_cekqty_rosset', TbCekqtyRossetController::class)
                 ->parameters(['tb_cekqty_rosset' => 'rosset'])
@@ -62,15 +62,15 @@ Route::middleware('auth')->group(function () {
         'reportData/{bagian}/{id}',
         [TbCekqtyRossetController::class, 'destroy']
     )
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->where('id', '[0-9]+')
         ->name('reportData.destroy');
     Route::get('reportData/{bagian}/{id}', [TbCekqtyRossetController::class, 'edit'])
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->where('id', '[0-9]+')
         ->name('reportData.edit');
     Route::put('reportData/{bagian}/{id}', [TbCekqtyRossetController::class, 'update'])
-        ->whereIn('bagian', ['mesin', 'rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->where('id', '[0-9]+')
         ->name('reportData.update');
 });
