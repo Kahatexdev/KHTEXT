@@ -336,6 +336,6 @@ class TbCekqtyRossetController extends Controller
 
     public function inputErp()
     {
-        return view($this->role . '.bagian.input-erp');
+        return view('bagian.input-erp');
     }
 }

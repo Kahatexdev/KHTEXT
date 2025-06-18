@@ -86,8 +86,6 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
         ->name('user.jahit.storeJahit');
     Route::post('perbaikan/storePerbaikan/{bagian}', [TbCekqtyRossetController::class, 'storePerbaikan'])
         ->name('user.perbaikan.storePerbaikan');
-
-    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
@@ -128,10 +126,8 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
         ->name('jahit.storeJahit');
     Route::post('perbaikan/storePerbaikan/{bagian}', [TbCekqtyRossetController::class, 'storePerbaikan'])
         ->name('perbaikan.storePerbaikan');
-
-    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
+    Route::get('inputerp', [TbCekqtyRossetController::class, 'inputErp'])->name('inputerp.index');
 });
-
 
 // Boleh multi-role
 Route::middleware(['auth', 'role:user,monitoring'])->group(function () {

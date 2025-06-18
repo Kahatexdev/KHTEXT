@@ -1,5 +1,28 @@
 @extends('layouts.app')
 @section('title', 'Bagian Mesin')
+@section('navbar-report-mesin')
+<li class="relative flex items-center pl-4">
+  <div class="relative">
+    <button
+      id="dropdownToggle"
+      type="button"
+      class="flex items-center px-3 py-2 font-semibold text-sm text-slate-600 hover:text-slate-800 focus:outline-none focus:ring focus:ring-slate-300 rounded-md transition">
+      <span class="hidden sm:inline">Report</span>
+      <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+        <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <div
+      id="dropdownMenu"
+      class="hidden absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 py-2 animate-fade-in-down">
+      <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-gray-100">Report Mesin</a>
+      <a href="#" class="block px-4 py-2 text-sm text-slate-700 hover:bg-gray-100">Report Jam Input ERP</a>
+    </div>
+  </div>
+</li>
+@endsection
+
 
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
@@ -449,62 +472,22 @@
     </div>
 </div>
 
-
 @include('layouts.footer')
 @endsection
-@push('styles')
-{{-- Custom Styles for enhanced visual appeal --}}
-<style>
-    @keyframes pulse-success {
-        0%, 100% {
-            background-color: rgb(220 252 231);
-        }
-        50% {
-            background-color: rgb(187 247 208);
-        }
-    }
-    
-    @keyframes pulse-warning {
-        0%, 100% {
-            background-color: rgb(254 249 195);
-        }
-        50% {
-            background-color: rgb(253 230 138);
-        }
-    }
-    
-    .animate-pulse-success {
-        animation: pulse-success 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    .animate-pulse-warning {
-        animation: pulse-warning 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    /* Smooth transitions for interactive elements */
-    .transition-all {
-        transition: all 0.3s ease-in-out;
-    }
-    
-    /* Custom scrollbar for table */
-    .overflow-x-auto::-webkit-scrollbar {
-        height: 8px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 4px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-    }
-    
-    .overflow-x-auto::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
-    </style>
-    @endpush
+
 @push('scripts')
+<script>
+    const toggleBtn = document.getElementById('dropdownToggle');
+    const dropdown = document.getElementById('dropdownMenu');
+  
+    document.addEventListener('click', function (e) {
+      if (toggleBtn.contains(e.target)) {
+        dropdown.classList.toggle('hidden');
+      } else if (!dropdown.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+  </script>
+  
+  
 @endpush

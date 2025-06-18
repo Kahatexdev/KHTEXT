@@ -21,6 +21,7 @@
                 </div>
             </div>
             <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
+                @yield('navbar-report-mesin')
                 <li class="flex items-center">
                     @auth
                     <div class="relative">
