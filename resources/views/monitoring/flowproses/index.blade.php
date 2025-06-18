@@ -5,14 +5,7 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
-        {{-- Pesan sukses --}}
-        @if (session('success'))
-            <div class="mb-4 p-3 bg-green-100 text-green-800 rounded">
-                {{ session('success') }}
-            </div>
-        @endif
-
+    <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
         {{-- Header --}}
         <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
             <div>
@@ -22,7 +15,7 @@
             <div>
                 <button id="openImportModalButton"
                     class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
-                    Import Excel
+                    <i class="fas fa-file-import mr-2"></i>Import Excel
                 </button>
             </div>
         </div>
@@ -32,7 +25,7 @@
             <table id="flowTable" class="display responsive nowrap w-full">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th>#</th>
+                        <th>No</th>
                         {{-- <th>APS Style ID</th> --}}
                         <th>Model</th>
                         <th>Area</th>
@@ -65,7 +58,8 @@
                                 </ul>
                             </td>
                             <td class="text-center">{{ $flow->user->name ?? '-' }}</td>
-                            <td class="text-center space-x-2">
+                            <td class="px-4 py-2">
+                                <div class="flex items-center justify-center gap-2 h-full">
                                 <a href="{{ route('flowproses.edit', $flow->id_main_flow) }}"
                                     class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium"><i
                                         class="fas fa-edit mr-2"></i> Edit</a>
@@ -74,11 +68,11 @@
                                     method="POST" class="inline delete-form">
                                     @csrf @method('DELETE')
                                     <button type="button"
-                                        class="btn-delete inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium">
+                                        class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium">
                                         <i class="fas fa-trash-alt mr-2"></i> Hapus
                                     </button>
                                 </form>
-
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -110,8 +104,8 @@
                     <label class="block text-sm font-medium text-gray-700">File Attachment <span
                             class="text-red-500">*</span></label>
                     <input type="file" name="file_attachment" accept=".xlsx,.xls"
-                        class="mt-1 w-full border-gray-300 rounded-lg" />
-                    <p class="text-xs text-gray-500">Format: XLSX, XLS. Maks 5MB</p>
+                        class="mt-1 w-full border border-gray-300 rounded-lg text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                    <p class="text-xs text-gray-500 mt-1">Format: XLSX, XLS. Maks 5MB</p>
                 </div>
                 <div class="flex justify-end space-x-2">
                     <button type="button" id="cancelImportButton"
@@ -125,6 +119,17 @@
 @endsection
 
 @push('scripts')
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '{{ session("success") }}',
+        showConfirmButton: false,
+        timer: 2000
+    });
+</script>
+@endif
     <script>
         const importModal = document.getElementById('importModal');
         document.getElementById('openImportModalButton').addEventListener('click', () => importModal.classList.remove(
@@ -166,10 +171,10 @@
                     confirmButtonText: 'Ya, hapus!',
                     cancelButtonText: 'Batal',
                     customClass: {
-                        confirmButton: 'swal2-confirm bg-red-600 text-white hover:bg-red-700 mr-5',
+                        confirmButton: 'swal2-confirm bg-red-600 text-white hover:bg-red-700',
                         cancelButton: 'swal2-cancel bg-gray-400 text-white hover:bg-gray-500'
                     },
-                    buttonsStyling: false // agar customClass dipakai
+                    buttonsStyling: true // agar customClass dipakai
                 }).then(result => {
                     if (result.isConfirmed) {
                         form.submit();

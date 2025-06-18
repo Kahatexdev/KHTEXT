@@ -43,7 +43,7 @@ class TbCekqtyRossetController extends Controller
         ]);
     }
 
-    
+
 
     public function index(Request $request, string $bagian)
     {
@@ -92,7 +92,7 @@ class TbCekqtyRossetController extends Controller
             'ket_ovh_siang' => 'string',
             'ket_reject' => 'string',
             'ket_rework' => 'string',
-            'direct' => 'integer', 
+            'direct' => 'integer',
         ]);
         // dd ($validated);
         // Simpan data ke database
@@ -146,11 +146,6 @@ class TbCekqtyRossetController extends Controller
             'data' => $data,
             'bagian' => $bagian,
         ]);
-    }
-
-    public function inputErp()
-    {
-        return view('bagian.input-erp');
     }
 
     public function edit(string $bagian, int $id)

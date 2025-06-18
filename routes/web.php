@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('reportData', [TbCekqtyRossetController::class, 'reportData'])->name('monitoring.reportData');
+    Route::get('reportData', [TbCekqtyRossetController::class, 'reportData'])->name('reportData');
     Route::get('reportData/{bagian}', [TbCekqtyRossetController::class, 'dataByBagian'])
         ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->name('reportDatabyBagian');
@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
                     'update'  => 'tb_cekqty_rosset.update',
                 ]);
         });
-    
+
     Route::delete(
         'reportData/{bagian}/{id}',
         [TbCekqtyRossetController::class, 'destroy']
@@ -73,12 +73,13 @@ Route::middleware('auth')->group(function () {
         ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->where('id', '[0-9]+')
         ->name('reportData.update');
+
+    Route::resource('mesin', TbCekqtyController::class);
 });
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexUser'])->name('user.dashboard');
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
-    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
@@ -91,7 +92,6 @@ Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(func
     Route::resource('area', AreaController::class);
     Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
     Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
-    Route::get('mesin/input_erp', [TbCekqtyRossetController::class, 'inputErp'])->name('mesin.input_erp');
 });
 
 // Boleh multi-role

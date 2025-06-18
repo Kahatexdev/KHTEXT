@@ -2,21 +2,48 @@
 @section('title','Edit Flow Proses')
 
 @section('content')
-<div class="max-w-4xl mx-auto p-6 space-y-6">
+<div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
 
   {{-- Header main_flowproses --}}
-  <div class="bg-white shadow-lg rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <div>
-      <h2 class="text-2xl font-semibold mb-2">Edit Flow Proses</h2>
-      <p class="text-gray-600">ID Style: <span class="font-medium">{{ $mainFlowproses->idapsperstyle }}</span></p>
+  <div class="bg-white border border-gray-200 rounded-lg p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold text-black">Edit Flow Proses</h2>
+        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
+            ID Style <strong>{{ $mainFlowproses->idapsperstyle }}</strong>
+        </span>
     </div>
-    <div class="space-y-2">
-      <p><span class="font-medium">Model:</span> {{ $style['mastermodel'] }}</p>
-      <p><span class="font-medium">Size:</span> {{ $style['size'] }}</p>
-      <p><span class="font-medium">Inisial:</span> {{ $style['inisial'] }}</p>
-      <p><span class="font-medium">Delivery:</span> {{ $style['delivery'] ?? '-' }}</p>
-      <p><span class="font-medium">Area:</span> {{ $mainFlowproses->area }}</p>
-      <p><span class="font-medium">Tanggal:</span> {{ \Carbon\Carbon::parse($mainFlowproses->tanggal)->format('Y-m-d') }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3">
+        <div class="space-y-2">
+            <div class="flex">
+                <span class="text-gray-500 w-20">Model</span>
+                <span class="font-medium">{{ $style['mastermodel'] }}</span>
+            </div>
+            <div class="flex">
+                <span class="text-gray-500 w-20">Size</span>
+                <span class="font-medium">{{ $style['size'] }}</span>
+            </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex">
+            <span class="text-gray-500 w-20">Inisial</span>
+            <span class="font-medium">{{ $style['inisial'] }}</span>
+        </div>
+        <div class="flex">
+          <span class="text-gray-500 w-20">Delivery</span>
+          <span class="font-medium">{{ $style['delivery'] ?? '-' }}</span>
+      </div>
+        </div>
+        <div class="space-y-2">
+            <div class="flex">
+                <span class="text-gray-500 w-20">Area</span>
+                <span class="font-medium">{{ $mainFlowproses->area }}</span>
+            </div>
+            <div class="flex">
+                <span class="text-gray-500 w-20">Tanggal</span>
+                <span class="font-medium">{{ \Carbon\Carbon::parse($mainFlowproses->tanggal)->format('d M Y') }}</span>
+            </div>
+        </div>
     </div>
   </div>
 
@@ -25,7 +52,7 @@
   @csrf
   @method('PUT')
 
-    <div class="bg-white shadow-lg rounded-2xl p-6">
+    <div class="bg-white border border-gray-200 shadow-lg rounded-2xl p-6">
       <h3 class="text-lg font-semibold mb-4">Detail Proses</h3>
 
       <div class="space-y-6">
@@ -71,18 +98,16 @@
           </div>
         @endforeach
       </div>
-    </div>
-
-    {{-- Buttons --}}
-    <div class="flex flex-col sm:flex-row justify-end gap-3">
-      <a href="{{ route('flowproses.index') }}"
-         class="px-6 py-2 bg-gray-300 rounded-lg text-center hover:bg-gray-400 transition">
-         Batal
-      </a>
-      <button type="submit"
-         class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-         Simpan Semua
-      </button>
+      <div class="flex flex-col sm:flex-row justify-end gap-3 mt-3">
+        <a href="{{ route('flowproses.index') }}"
+           class="px-6 py-2 bg-gray-300 rounded-lg text-center hover:bg-gray-400 transition">
+           Batal
+        </a>
+        <button type="submit"
+           class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+           Simpan Semua
+        </button>
+      </div>
     </div>
   </form>
 </div>
