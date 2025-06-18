@@ -73,6 +73,10 @@ Route::middleware('auth')->group(function () {
         ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->where('id', '[0-9]+')
         ->name('reportData.update');
+    // exportExcel
+    Route::get('exportExcel/{bagian}', [TbCekqtyRossetController::class, 'exportExcel'])
+        ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
+        ->name('reportData.exportExcel');
 
     Route::resource('mesin', TbCekqtyController::class);
 });

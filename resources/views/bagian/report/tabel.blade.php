@@ -39,9 +39,14 @@
         {{-- Header --}}
         <div class="flex items-center justify-between">
             <h1 class="text-3xl font-bold text-gray-800">Report Data {{ $bagian }}</h1>
+            <div class="flex items-center space-x-2">
             <a href="{{ route('tb_cekqty_rosset.index', ['bagian' => $bagian]) }}" class="text-blue-600 hover:text-blue-800">
                 <i class="fas fa-plus"></i> Tambah Data Baru
             </a>
+            <a href="{{ route('reportData.exportExcel', ['bagian' => $bagian]) }}" class="text-green-600 hover:text-green-800 px-3 py-2 rounded border border-green-600 ml-2 flex items-center">
+                <i class="fas fa-file-excel mr-1"></i> Export Excel
+            </a>
+            </div>
         </div>
 
         @if ($data->isEmpty())

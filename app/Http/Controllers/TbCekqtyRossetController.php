@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\tb_cekqty_rosset;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat\DateFormatter;
+use App\Exports\CekQtyRossetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TbCekqtyRossetController extends Controller
 {
@@ -233,5 +235,18 @@ class TbCekqtyRossetController extends Controller
         tb_cekqty_rosset::where('id_cekqty_rosset', $id)->delete();
 
         return back()->with('success', 'Data berhasil dihapus');
+    }
+
+    // expoert excel
+    public function exportExcel(string $bagian)
+    {
+        $allowedBagian = ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
+        if (!in_array($bagian, $allowedBagian)) {
+            abort(404, 'Bagian tidak ditemukan');
+        }
+
+        $fileName = sprintf('cekqty_%s_%s.xlsx', $bagian, now()->format('Ymd_His'));
+
+        return Excel::download(new CekQtyRossetExport($bagian), $fileName);
     }
 }
