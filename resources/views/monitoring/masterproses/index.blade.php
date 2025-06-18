@@ -2,7 +2,7 @@
 @section('title', 'Master Proses')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b">
             <h2 class="text-lg font-bold">Master Proses</h2>

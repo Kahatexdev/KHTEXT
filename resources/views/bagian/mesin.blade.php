@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Bagian Mesin')
+
 @section('navbar-report-mesin')
 <li class="relative flex items-center pl-4">
   <div class="relative">
@@ -23,10 +24,9 @@
 </li>
 @endsection
 
-
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="bg-white shadow-md rounded-lg">
         <div class="flex justify-between items-center px-6 py-4 border-b">
             <h2 class="text-xl font-bold">User Mesin</h2>
         </div>
@@ -70,14 +70,14 @@
                 </div>
             </div>
 
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden mt-4">
+                <div class="bg-white rounded-lg shadow-lg mt-4">
                     {{-- Header --}}
                     <div class="bg-gradient-to-r from-dark-600 to-dark-700 px-6 py-4">
                         <h1 class="text-2xl font-bold text-white">Cross Check QTY</h1>
                     </div>
             
                     {{-- Main Table --}}
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-scroll">
                         <table class="w-full">
                             <thead>
                                 <tr class="bg-gray-100">

@@ -2,7 +2,7 @@
 @section('title', 'Users')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b">
             <h2 class="text-xl font-bold">Daftar Users</h2>
@@ -31,11 +31,27 @@
                         <td class="py-3 px-6">{{ $user->bagian_area }}</td>
                         <td class="py-3 px-6">{{ $user->role }}</td>
                         <td class="py-3 px-6">
-                            <button onclick="editUser({{ $user }})" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
-                            <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="inline">
+                            <div class="flex gap-2 h-full">
+                            <button onclick="editUser({{ $user }})" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium"><i class="fas fa-edit mr-2"></i>Edit</button>
+                            {{-- <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="inline delete-form">
                                 @csrf @method('DELETE')
-                                <button onclick="return confirm('Yakin hapus?')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Hapus</button>
+                                <button type="button"
+                                        class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium" data-id="{{ $user->id }}">
+                                        <i class="fas fa-trash-alt mr-2"></i> Hapus
+                                </button>
+                            </form> --}}
+
+                            <form method="POST" action="{{ route('users.destroy', $user->id) }}" class="inline delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button"
+                                    class="delete-button inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium"
+                                    data-id="{{ $user->id }}">
+                                    <i class="fas fa-trash-alt mr-2"></i> Hapus
+                                </button>
                             </form>
+                            
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -154,4 +170,35 @@
         $('#userForm input[name="_method"]').remove();
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const form = this.closest('form');
+                const userId = this.getAttribute('data-id');
+    
+                Swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: 'Data user ini akan dihapus permanen!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    customClass: {
+                        confirmButton: 'swal2-confirm bg-red-600 text-white hover:bg-red-700',
+                        cancelButton: 'swal2-cancel bg-gray-400 text-white hover:bg-gray-500'
+                    },
+                    buttonsStyling: true,
+                    confirmButtonColor: '#dc2626', // red-600
+                    cancelButtonColor: '#6b7280', // gray-500
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+    </script>
+    
 @endpush
