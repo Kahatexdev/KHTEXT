@@ -37,7 +37,8 @@ class TbCekqtyRossetController extends Controller
 
     public function reportData()
     {
-        $bagian = tb_cekqty_rosset::select('bagian')->distinct()->get();
+        $bagian = ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'];
+        // dd($bagian);
         return view('bagian.index', [
             'bagian' => $bagian,
         ]);
