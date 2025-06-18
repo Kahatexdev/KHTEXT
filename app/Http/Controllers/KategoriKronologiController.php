@@ -14,7 +14,7 @@ class KategoriKronologiController extends Controller
      */
     public function index()
     {
-        $data = kategori_kronologi::orderBy('created_at', 'desc')->paginate(10);
+        $data = kategori_kronologi::all();
         return view('monitoring.kategori_kronologi.index', compact('data'));
     }
 

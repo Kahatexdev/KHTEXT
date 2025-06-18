@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori_kronologi;
+use App\Models\kronologi;
+use App\Services\CapacityService;
 use Illuminate\Http\Request;
 
 class KronologiController extends Controller
@@ -10,10 +13,15 @@ class KronologiController extends Controller
     /**
      * Display the kronologi page.
      */
-    public function index()
+    public function index(CapacityService $capacityService)
     {
         $role = auth()->user()->role;
-        return view($role.'.kronologi.index');
+        $kategoriKronologi = kategori_kronologi::select('id_kategori', 'nama_kategori')
+            ->orderBy('nama_kategori', 'asc')
+            ->get();
+        $kronologi = kronologi::all();
+        // get all capacity service distict
+        return view($role.'.kronologi.index',compact('kategoriKronologi', 'kronologi'));
     }
 
     /**

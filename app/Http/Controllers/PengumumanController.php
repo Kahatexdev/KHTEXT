@@ -24,10 +24,18 @@ class PengumumanController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('pengumuman/images', 'public');
+            $judul = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->input('judul_pengumuman'));
+            $ext = $request->file('gambar')->getClientOriginalExtension();
+            $filename = $judul . '_' . time() . '.' . $ext;
+            $path = $request->file('gambar')->storeAs('pengumuman/images', $filename, 'public');
+            $data['gambar'] = $path;
         }
         if ($request->hasFile('file_attachment')) {
-            $data['file_attachment'] = $request->file('file_attachment')->store('pengumuman/files', 'public');
+            $judul = preg_replace('/[^A-Za-z0-9_\-]/', '_', $request->input('judul_pengumuman'));
+            $ext = $request->file('file_attachment')->getClientOriginalExtension();
+            $filename = $judul . '_' . time() . '.' . $ext;
+            $path = $request->file('file_attachment')->storeAs('pengumuman/files', $filename, 'public');
+            $data['file_attachment'] = $path;
         }
 
         Pengumuman::create($data);

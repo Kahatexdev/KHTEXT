@@ -51,8 +51,10 @@
                                         class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                         required>
                                         <option value="">Pilih WIP</option>
-                                        <option value="WIP1">WIP 1</option>
-                                        <option value="WIP2">WIP 2</option>
+                                        <option value="GS01">GS01</option>
+                                        <option value="KK1A">KK1A</option>
+                                        <option value="RS01">RS01</option>
+                                        <option value="ST01">ST01</option>
                                     </select>
                                 </div>
                                 <div class="sm:col-span-2 lg:col-span-1">
@@ -61,8 +63,11 @@
                                         class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                         required>
                                         <option value="">Pilih Kategori</option>
-                                        <option value="1">Kategori 1</option>
-                                        <option value="2">Kategori 2</option>
+                                        @foreach($kategoriKronologi as $kategori)
+                                            <option value="{{ $kategori->id_kategori }}"
+                                                {{ old('kategori') == $kategori->id_kategori ? 'selected' : '' }}>
+                                                {{ $kategori->nama_kategori }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

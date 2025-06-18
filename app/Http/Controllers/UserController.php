@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kronologi;
+use App\Models\pengumuman;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +23,21 @@ class UserController extends Controller
 
     public function indexMonitoring()
     {
-        return view('monitoring.dashboard');
+        if (Auth::user()->role !== 'monitoring') {
+            abort(403, 'Unauthorized action.');
+        }
+        $pengumuman = pengumuman::latest()->paginate(10);
+        $kronologi = kronologi::latest()->paginate(10);
+        return view('monitoring.dashboard', compact('pengumuman', 'kronologi'));
     }
     public function indexUser()
     {
-        return view('user.dashboard');
+        if (Auth::user()->role !== 'user') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $pengumuman = pengumuman::latest()->paginate(10);
+        return view('user.dashboard', compact('pengumuman'));
     }
 
     public function index()
