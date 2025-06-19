@@ -31,7 +31,8 @@
             <h2 class="text-xl font-bold">User Mesin</h2>
         </div>
         <div class="px-6 py-4">
-            <form action="">
+            <form action="{{ route('mesin.store') }}" method="POST">
+                @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="tanggalCrossCheck" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
