@@ -35,8 +35,8 @@
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label for="tanggalCrossCheck" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
-                        <input type="date" id="tanggalCrossCheck" name="tanggalCrossCheck"
+                        <label for="tanggal_input" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
+                        <input type="date" id="tanggal_input" name="tanggal_input"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
@@ -66,7 +66,7 @@
                     </div>
                     <div>
                         <label for="shift" class="block text-sm font-medium text-gray-700 mb-1">Shift</label>
-                        <input type="text" id="shift" name="shift" placeholder="NON SHIFT"
+                        <input type="text" id="shift" name="shift" placeholder="NON SHIFT" value="NON SHIFT"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" readonly>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
 
                     {{-- Main Table --}}
                     <div class="overflow-x-scroll">
-                        <table class="w-full">
+                        <table class="w-full border-collapse border border-gray-400">
                             <thead>
                                 <tr class="bg-gray-100">
                                     <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 border-r border-gray-200">
@@ -162,7 +162,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="input_erp" id="input_erp" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <input type="number" name="qty_erp" id="qty_erp" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <span id="selisih_erp_timter" class="text-sm text-gray-900"></span>
@@ -194,7 +194,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_erp" id="ket_erp" rows="2"></textarea>
+                                        <textarea name="ket_erp" id="ket_erp" rows="2" required></textarea>
                                     </td>
                                 </tr>
 
@@ -215,7 +215,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="input_timter" id="input_timter" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <input type="number" name="qty_timter" id="qty_timter" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -246,7 +246,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_timter" id="ket_timter" rows="2"></textarea>
+                                        <textarea name="ket_timter" id="ket_timter" rows="2" required></textarea>
                                     </td>
                                 </tr>
 
@@ -267,7 +267,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="input_summary" id="input_summary" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <input type="number" name="qty_summary" id="qty_summary" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -297,7 +297,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_summary" id="ket_summary" rows="2"></textarea>
+                                        <textarea name="ket_summary" id="ket_summary" rows="2" required></textarea>
                                     </td>
                                 </tr>
 
@@ -318,7 +318,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="input_running" id="input_running" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <input type="number" name="qty_running" id="qty_running" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -347,7 +347,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_running" id="ket_running" rows="2"></textarea>
+                                        <textarea name="ket_running" id="ket_running" rows="2" required></textarea>
                                     </td>
                                 </tr>
 
@@ -368,7 +368,7 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="input_capacity" id="input_capacity" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                        <input type="number" name="qty_apk" id="qty_apk" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -395,7 +395,7 @@
                                         <!-- Kosongkan -->
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_capacity" id="ket_capacity" rows="2"></textarea>
+                                        <textarea name="ket_apk" id="ket_apk" rows="2" required></textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -416,13 +416,13 @@
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
-                        <label for="keterangan_reject" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Reject</label>
-                        <textarea name="keterangan_reject" id="keterangan_reject" cols="30" rows="3"
+                        <label for="ket_reject" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Reject</label>
+                        <textarea name="ket_reject" id="ket_reject" cols="30" rows="3"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                     <div>
-                        <label for="keterangan_rework" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Rework</label>
-                        <textarea name="keterangan_rework" id="keterangan_rework" cols="30" rows="3"
+                        <label for="ket_rework" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Rework</label>
+                        <textarea name="ket_rework" id="ket_rework" cols="30" rows="3"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
                     </div>
                 </div>
@@ -454,11 +454,11 @@
     });
 </script>
 <script>
-    const erpInput      = document.getElementById('input_erp');
-    const timterInput   = document.getElementById('input_timter');
-    const summaryInput  = document.getElementById('input_summary');
-    const runningInput  = document.getElementById('input_running');
-    const capacityInput = document.getElementById('input_capacity');
+    const erpInput      = document.getElementById('qty_erp');
+    const timterInput   = document.getElementById('qty_timter');
+    const summaryInput  = document.getElementById('qty_summary');
+    const runningInput  = document.getElementById('qty_running');
+    const capacityInput = document.getElementById('qty_apk');
 
     const selisihErpTimter   = document.getElementById('selisih_erp_timter');
     const selisihErpSummary  = document.getElementById('selisih_erp_summary');
