@@ -79,7 +79,10 @@ Route::middleware('auth')->group(function () {
         ->whereIn('bagian', ['rosso', 'setting', 'gudang', 'handprint', 'jahit', 'perbaikan'])
         ->name('reportData.exportExcel');
 
-    Route::resource('mesin', TbCekqtyController::class);
+    Route::middleware('auth')->prefix('bagian')->group(function () {
+        Route::resource('mesin', TbCekqtyController::class)->except(['show']);
+        Route::get('mesin/exportExcel', [TbCekqtyController::class, 'exportExcel'])->name('mesin.exportExcel');
+    });
     Route::resource('absen', AbsenController::class);
     Route::get('exportExcelAbsen', [AbsenController::class, 'export'])->name('absen.export');
 
