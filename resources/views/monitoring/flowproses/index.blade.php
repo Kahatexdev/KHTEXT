@@ -13,6 +13,10 @@
                 <p class="text-sm text-gray-600">Kelola Flow Proses</p>
             </div>
             <div>
+                <a href="{{ route('flowproses.create') }}"
+                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition inline-flex items-center">
+                    <i class="fas fa-plus mr-2"></i>Tambah Flow Proses
+                </a>
                 <button id="openImportModalButton"
                     class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
                     <i class="fas fa-file-import mr-2"></i>Import Excel

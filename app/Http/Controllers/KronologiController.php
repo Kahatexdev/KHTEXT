@@ -21,7 +21,7 @@ class KronologiController extends Controller
             ->get();
         $kronologi = kronologi::all();
         // get all capacity service distict
-        return view($role.'.kronologi.index',compact('kategoriKronologi', 'kronologi'));
+        return view('monitoring.kronologi.index',compact('kategoriKronologi', 'kronologi'));
     }
 
     /**

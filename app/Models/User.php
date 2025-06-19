@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(tb_cekqty::class, 'id_user');
     }
+    public function absen()
+    {
+        return $this->hasMany(absen::class, 'id_user');
+    }
 }
