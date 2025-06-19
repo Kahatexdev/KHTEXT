@@ -7,12 +7,6 @@
 
 @section('content')
 <div class="w-full px-6 py-6 mx-auto bg-gray-50 min-h-screen">
-    <!-- Welcome Header -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-2">Dashboard</h1>
-        <p class="text-gray-600">Welcome back! Here's your overview today.</p>
-    </div>
-
     <!-- Statistics Row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow duration-200">
