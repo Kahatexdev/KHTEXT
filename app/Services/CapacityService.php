@@ -94,4 +94,45 @@ class CapacityService
         }
         return $results;
     }
+
+    public function getMasterModel(): array
+    {
+        $url = $this->baseUrl . '/getMasterModel';
+        // dd ($url);
+        try {
+            $response = Http::withHeaders([
+                // 'API-KEY' => $this->apiKey
+            ])->timeout(10)
+                ->get($url)
+                ->throw();
+
+            return $response->json([]);
+        } catch (\Illuminate\Http\Client\RequestException $e) {
+            \Log::error("CapacityService@getMasterModel → " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getInisialByModel(): ?array
+    {
+        $model = request()->input('mastermodel');
+        // dd ($model);
+        if (empty($model)) {
+            return null; // atau bisa throw exception jika perlu
+        }
+        $url = $this->baseUrl . '/getInisialByModel?mastermodel=' . urlencode($model);
+        try {
+            $response = Http::withHeaders([
+                // 'API-KEY' => $this->apiKey
+            ])->timeout(10)
+                ->get($url)
+                ->throw();
+
+            return $response->json([]);
+        } catch (\Illuminate\Http\Client\RequestException $e) {
+            \Log::error("CapacityService@getInisialByModel({$model}) → " . $e->getMessage());
+            return null;
+        }
+    }
+
 }

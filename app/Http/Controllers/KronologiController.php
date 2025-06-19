@@ -6,6 +6,8 @@ use App\Models\kategori_kronologi;
 use App\Models\kronologi;
 use App\Services\CapacityService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\KronologiKesalahanImport;
 
 class KronologiController extends Controller
 {
@@ -21,7 +23,7 @@ class KronologiController extends Controller
             ->get();
         $kronologi = kronologi::all();
         // get all capacity service distict
-        return view($role.'.kronologi.index',compact('kategoriKronologi', 'kronologi'));
+        return view('monitoring.kronologi.index',compact('kategoriKronologi', 'kronologi'));
     }
 
     /**
@@ -39,5 +41,16 @@ class KronologiController extends Controller
     {
         // Validate and store the kronologi entry logic here
         return redirect()->route('kronologi.index')->with('success', 'Kronologi entry created successfully.');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+        // DD ($request->file('file'));
+        Excel::import(new KronologiKesalahanImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data berhasil diimport!');
     }
 }

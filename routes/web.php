@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KronologiController;
@@ -82,23 +83,29 @@ Route::middleware('auth')->group(function () {
         Route::resource('mesin', TbCekqtyController::class)->except(['show']);
         Route::get('mesin/exportExcel', [TbCekqtyController::class, 'exportExcel'])->name('mesin.exportExcel');
     });
+    Route::resource('absen', AbsenController::class);
+    Route::get('exportExcelAbsen', [AbsenController::class, 'export'])->name('absen.export');
+
+    Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
+    Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
+    Route::get('getInisialByModel', [FlowProsesController::class, 'getInisialByModel'])
+        ->name('flowproses.getInisialByModel');
+
+    Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    Route::post('import/kronologi', [KronologiController::class, 'import'])->name('import.kronologi.process');
 });
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexUser'])->name('user.dashboard');
-    Route::get('/kronologi', [KronologiController::class, 'index'])->name('user.kronologi.index');
 });
 
 Route::middleware(['auth', 'role:monitoring'])->prefix('monitoring')->group(function () {
     Route::get('/dashboard', [UserController::class, 'indexMonitoring'])->name('monitoring.dashboard');
-    Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
     Route::resource('/masterproses', MasterProsesController::class);
     Route::resource('/users', UserController::class);
     Route::resource('pengumuman', PengumumanController::class);
     Route::resource('kategori_kronologi', KategoriKronologiController::class);
     Route::resource('area', AreaController::class);
-    Route::resource('flowproses', FlowProsesController::class)->parameters(['flowproses' => 'main_flowproses']);
-    Route::post('flowproses/import', [FlowProsesController::class, 'import'])->name('flowproses.import');
 });
 
 // Boleh multi-role

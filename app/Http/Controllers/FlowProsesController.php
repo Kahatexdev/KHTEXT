@@ -61,11 +61,49 @@ class FlowProsesController extends Controller
     }
     public function create()
     {
-        // Method ini bisa digunakan untuk menampilkan form tambah data flow proses
-        return view('monitoring.flowproses.create');
+        $masterProses = master_proses::orderBy('id_master_proses')->get();
+        $capacity = new CapacityService();
+        // Panggil API untuk mendapatkan daftar style
+        $modelArray = $capacity->getMasterModel();
+        // Konversi setiap array jadi object
+        $model = collect($modelArray)
+            ->map(fn($item) => (object) $item)
+            ->all(); // atau biarkan collection jika mau
+        // Kirim ke view
+        // Jika API gagal, $model akan menjadi array kosong
+        if (empty($model)) {
+            return redirect()
+                ->route('flowproses.index')
+                ->with('error', 'Gagal mengambil data dari API. Silakan coba lagi.');
+        }
+        return view('monitoring.flowproses.create', compact('masterProses', 'model'));
     }
+
+    public function getInisialByModel(Request $request)
+    {
+        $request->validate([
+            'mastermodel' => 'required|string|max:255',
+        ]);
+
+        try {
+            $capacity = new CapacityService();
+            $inisialRaw = $capacity->getInisialByModel(
+                $request->input('mastermodel')
+            );
+        } catch (\Exception $e) {
+            return response()->json(['inisial' => [], 'error' => 'API error'], 500);
+        }
+
+        $inisialList = array_column($inisialRaw, 'inisial');
+
+        return response()->json([
+            'inisial' => $inisialList
+        ], 200);
+    }
+
     public function store(Request $request)
     {
+        dd ($request->all());
         // Method ini bisa digunakan untuk menyimpan data flow proses baru
         // Validasi dan simpan data sesuai kebutuhan
         $data = $request->validate([
