@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
         ->name('flowproses.getInisialByModel');
 
     Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    Route::post('import/kronologi', [KronologiController::class, 'import'])->name('import.kronologi.process');
 });
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
