@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+<div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
 
         {{-- Alerts --}}
         @foreach (['success' => 'green', 'error' => 'red', 'warning' => 'yellow'] as $type => $color)
@@ -37,14 +37,14 @@
         @endforeach
 
         {{-- Header --}}
-        <div class="flex items-center justify-between">
-            <h1 class="text-3xl font-bold text-gray-800">Report Data {{ $bagian }}</h1>
+        <div class="flex items-center justify-between p-4">
+            <h2 class="text-xl font-bold">REPORT DATA  {{ strtoupper($bagian) }}</h2>
             <div class="flex items-center space-x-2">
-            <a href="{{ route('tb_cekqty_rosset.index', ['bagian' => $bagian]) }}" class="text-blue-600 hover:text-blue-800">
-                <i class="fas fa-plus"></i> Tambah Data Baru
+            <a href="{{ route('tb_cekqty_rosset.index', ['bagian' => $bagian]) }}" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md  px-3 py-2">
+                <i class="fas fa-plus mr-1"></i>Tambah
             </a>
-            <a href="{{ route('reportData.exportExcel', ['bagian' => $bagian]) }}" class="text-green-600 hover:text-green-800 px-3 py-2 rounded border border-green-600 ml-2 flex items-center">
-                <i class="fas fa-file-excel mr-1"></i> Export Excel
+            <a href="{{ route('reportData.exportExcel', ['bagian' => $bagian]) }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                <i class="fas fa-file-excel mr-1"></i>Export
             </a>
             </div>
         </div>
@@ -224,17 +224,17 @@
                                     @endif
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $item->shift }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $item->user->name }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('reportData.edit', ['bagian' => $bagian, 'id' => $item->id_cekqty_rosset]) }}" class="text-blue-600 hover:text-blue-800">
-                                            <i class="fas fa-edit"></i> Edit
+                                    <td class="px-6 py-4 flex gap-2">
+                                        <a href="{{ route('reportData.edit', ['bagian' => $bagian, 'id' => $item->id_cekqty_rosset]) }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2">
+                                            <i class="fas fa-edit"></i>
                                         </a>
                                         <form action="{{ route('reportData.destroy', ['bagian'=>$bagian, 'id'=>$item->id_cekqty_rosset]) }}" method="POST"
                                             class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800 ml-2"
+                                            <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                                 onclick="return confirm('Yakin ingin menghapus data ini?')">
-                                                <i class="fas fa-trash"></i> Hapus
+                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
                                         

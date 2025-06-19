@@ -12,8 +12,8 @@
                 <p class="text-sm text-slate-500">Tools System</p>
             </div>
             <button id="openCreateModal"
-                class="w-full sm:w-auto inline-flex items-center justify-center bg-sky-400 hover:bg-sky-700 text-white text-sm px-4 py-2 rounded-lg shadow-sm transition-all">
-                <span class="text-lg mr-1">+</span> Tambah Kronologi
+                class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md  px-3 py-2">
+                <i class="fas fa-plus mr-1"></i>Tambah
             </button>
         </div>
 
@@ -485,12 +485,12 @@
                                         <td class="px-4 py-3 text-sm text-center">{{ $row->maintenance }}</td>
                                         <td class="px-4 py-3 text-sm text-center">
                                             <div class="flex justify-center space-x-2">
-                                                <button class="text-blue-500 hover:text-blue-700 font-medium edit-btn">
-                                                    Edit
+                                                <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md edit-btn">
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="text-red-500 hover:text-red-700 font-medium"
+                                                <button class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                                     onclick="confirm('Are you sure?') ? alert('Delete functionality') : ''">
-                                                    Delete
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
                                         </td>

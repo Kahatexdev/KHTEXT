@@ -4,14 +4,14 @@
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     {{-- Header --}}
-    <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold text-gray-800">Report Data Mesin</h1>
+    <div class="flex items-center justify-between p-4">
+        <h2 class="text-xl font-bold">REPORT DATA MESIN</h2>
         <div class="flex items-center space-x-2">
-            <a href="{{ route('mesin.create') }}" class="text-blue-600 hover:text-blue-800">
-                <i class="fas fa-plus"></i> Tambah Data Baru
+            <a href="{{ route('mesin.create') }}" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md  px-3 py-2">
+              <i class="fas fa-plus"></i> Tambah
             </a>
-            <a href="{{ route('mesin.exportExcel') }}" class="text-green-600 hover:text-green-800 px-3 py-2 rounded border border-green-600 ml-2 flex items-center">
-                <i class="fas fa-file-excel mr-1"></i> Export Excel
+            <a href="{{ route('mesin.exportExcel') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                <i class="fas fa-file-excel mr-1"></i> Export
             </a>
         </div>
     </div>

@@ -11,9 +11,9 @@
                 <p class="text-sm text-gray-500">Kelola semua pengumuman di sini</p>
             </div>
             <button id="openCreateModal"
-                class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
-                <i class="fas fa-plus mr-2"></i>
-                Buat Pengumuman
+                class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md  px-3 py-2">
+                <i class="fas fa-plus mr-1"></i>
+                Tambah
             </button>
         </div>
 
@@ -91,19 +91,17 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <div class="flex items-center justify-center space-x-2">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex justify-content space-x-2">
                                         <button data-id="{{ $item->id_pengumuman }}"
-                                            class="editBtn inline-flex items-center px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm">
-                                            <i class="fas fa-edit mr-1.5 text-xs"></i>
-                                            Edit
+                                            class="editBtn bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                                            <i class="fas fa-edit"></i>
                                         </button>
                                         <button type="button"
-                                            class="deleteBtn inline-flex items-center px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm"
+                                            class="deleteBtn bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                             data-id="{{ $item->id_pengumuman }}"
                                             data-url="{{ route('pengumuman.destroy', $item->id_pengumuman) }}">
-                                            <i class="fas fa-trash mr-1.5 text-xs"></i>
-                                            Hapus
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
                                 </td>

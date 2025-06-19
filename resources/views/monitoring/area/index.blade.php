@@ -14,11 +14,11 @@
         {{-- Header --}}
         <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
             <div>
-                <h2 class="text-2xl font-semibold text-gray-800">Data Area</h2>
-                <p class="text-sm text-gray-500">Kelola semua Area di sini</p>
+                <h2 class="text-xl font-bold">Data Area</h2>
+                <p class="text-sm text-gray-500">Kelola semua area di sini</p>
             </div>
-            <button id="openModal" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Tambah <Area></Area>
+            <button id="openModal" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+              <i class="fas fa-plus mr-1"></i>Tambah
             </button>
         </div>
 
@@ -26,7 +26,7 @@
             <table class="min-w-full divide-y divide-gray-200" id="areaTable">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">#</th>
+                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">No</th>
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nama</th>
                         <th class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase">Aksi</th>
                     </tr>
@@ -37,7 +37,7 @@
                             <td class="px-6 py-4 text-sm text-gray-700">
                                 {{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->nama_area }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 text-center space-x-2">
+                            <td class="px-6 py-4 text-sm text-gray-700">
                                 {{-- <button
                                     class="editBtn inline-flex items-center px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm"
                                     data-nama="{{ $item->nama_area }}">
@@ -45,11 +45,10 @@
                                     Edit
                                 </button> --}}
                                 <button type="button"
-                                    class="deleteBtn inline-flex items-center px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm"
+                                    class="deleteBtn bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                     data-nama="{{ $item->nama_area }}"
                                     data-url="{{ route('area.destroy', $item->nama_area) }}">
-                                    <i class="fas fa-trash mr-1.5 text-xs"></i>
-                                    Hapus
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </td>
                         </tr>

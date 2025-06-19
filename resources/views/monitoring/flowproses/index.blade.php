@@ -14,7 +14,7 @@
             </div>
             <div>
                 <button id="openImportModalButton"
-                    class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
                     <i class="fas fa-file-import mr-2"></i>Import Excel
                 </button>
             </div>
@@ -61,15 +61,15 @@
                             <td class="px-4 py-2">
                                 <div class="flex items-center justify-center gap-2 h-full">
                                 <a href="{{ route('flowproses.edit', $flow->id_main_flow) }}"
-                                    class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium"><i
-                                        class="fas fa-edit mr-2"></i> Edit</a>
+                                    class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"><i
+                                        class="fas fa-edit"></i></a>
                                 <form
                                     action="{{ route('flowproses.destroy', ['main_flowproses' => $flow->id_main_flow]) }}"
                                     method="POST" class="inline delete-form">
                                     @csrf @method('DELETE')
                                     <button type="button"
-                                        class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium">
-                                        <i class="fas fa-trash-alt mr-2"></i> Hapus
+                                        class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                                 </div>

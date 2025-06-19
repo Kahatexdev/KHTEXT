@@ -4,10 +4,13 @@
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <div class="flex justify-between items-center px-6 py-4 border-b">
-            <h2 class="text-lg font-bold">Master Proses</h2>
-            <button id="tambahTrigger" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium">
-                <i class="fas fa-plus mr-2"></i> Tambah Proses
+        <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
+            <div>
+                <h2 class="text-xl font-bold">Master Proses</h2>
+                <p class="text-sm text-gray-500">Kelola semua data proses di sini</p>
+            </div>
+              <button id="tambahTrigger" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md  px-3 py-2">
+                <i class="fas fa-plus mr-1"></i>Tambah
             </button>
         </div>
         <div class="px-6 py-4">
@@ -32,11 +35,11 @@
                             <td class="px-4 py-2">{{ $proses->created_at }}</td>
                             <td class="px-4 py-2">{{ $proses->updated_at }}</td>
                             <td class="px-4 py-2 flex gap-2">
-                                <button type="button" onclick="openEditModal('{{ $proses->id_master_proses }}', '{{ $proses->nama_proses }}')" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium">
-                                    <i class="fas fa-edit mr-2"></i> Edit
+                                <button type="button" onclick="openEditModal('{{ $proses->id_master_proses }}', '{{ $proses->nama_proses }}')" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                                    <i class="fas fa-edit"></i>
                                 </button>
-                                <button type="button" onclick="openDeleteModal('{{ $proses->id_master_proses }}')" class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 text-sm rounded font-medium">
-                                    <i class="fas fa-trash-alt mr-2"></i> Hapus
+                                <button type="button" onclick="openDeleteModal('{{ $proses->id_master_proses }}')" class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
