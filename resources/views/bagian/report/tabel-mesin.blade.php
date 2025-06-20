@@ -60,6 +60,7 @@
                     <th>Keterangan Running</th>
                     <th>Keterangan Apk</th>
                     <th>Shift</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,6 +86,18 @@
                     <td>{{ $r->ket_running }}</td>
                     <td>{{ $r->ket_apk }}</td>
                     <td>{{ $r->shift }}</td>
+                    <td>
+                        <a href="{{ route('mesin.edit', ['id' => $r->id_cekqty]) }}" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md mr-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="{{ route('mesin.destroy', ['id' => $r->id_cekqty]) }}" method="POST" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="delete-button bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md" data-id="{{ $r->id_cekqty }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -132,5 +145,33 @@
             ]
            });
        });
+</script>
+<script>
+    document.addEventListener('click', function (e) {
+        const button = e.target.closest('.delete-button');
+        if (button) {
+            e.preventDefault();
+            const form = button.closest('form');
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: 'Data mesin ini akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                customClass: {
+                    confirmButton: 'swal2-confirm bg-red-600 text-white hover:bg-red-700',
+                    cancelButton: 'swal2-cancel bg-gray-400 text-white hover:bg-gray-500'
+                },
+                buttonsStyling: true,
+                confirmButtonColor: '#dc2626', // red-600
+                cancelButtonColor: '#6b7280', // gray-500
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
+    });
 </script>
 @endpush

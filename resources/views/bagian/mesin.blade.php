@@ -2,19 +2,57 @@
 @section('title', 'Bagian Mesin')
 @section('page-title', 'Bagian Mesin')
 
+@section('navbar-report-mesin')
+<li class="relative flex items-center pl-4">
+    <div class="relative">
+        <button
+            id="dropdownToggle"
+            type="button"
+            class="flex items-center px-3 py-2 font-semibold text-sm text-slate-600 hover:text-slate-800 focus:outline-none focus:ring focus:ring-slate-300 rounded-md transition">
+            <span class="hidden sm:inline">Report</span> 
+            <svg class="-mr-1 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+        </button>
+
+        <div
+            id="dropdownMenu"
+            class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 py-2 opacity-0 scale-95 translate-y-1 pointer-events-none transition-all duration-200 ease-out">
+            <a href="{{ route('mesin.index')}}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-gray-100">REPORT MESIN</a>
+        </div>
+    </div>
+</li>
+@endsection
+
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg">
         <div class="flex justify-between items-center px-6 py-4 border-b">
-            <h2 class="text-xl font-bold">User Mesin</h2>
+            <h2 class="text-xl font-bold">
+                @if(isset($item))
+                    Edit Mesin
+                @else
+                    Create Mesin
+                @endif
+            </h2>
         </div>
         <div class="px-6 py-4">
-            <form action="{{ route('mesin.store') }}" method="POST">
+            @php
+                $isEdit = isset($item);
+                $formAction = $isEdit
+                    ? route('mesin.update', ['id' => $item->id_cekqty])
+                    : route('mesin.store');
+            @endphp
+            <form action="{{ $formAction }}" method="POST">
                 @csrf
+                @if($isEdit)
+                    @method('PUT')
+                @endif
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="tanggal_input" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
                         <input type="date" id="tanggal_input" name="tanggal_input"
+                            value="{{ old('tanggal_input', $item->tanggal_input ?? '') }}"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
@@ -22,24 +60,24 @@
                         <select name="area" id="area"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                             <option value="">Pilih Area</option>
-                            <option value="KK1A">KK1A</option>
-                            <option value="KK1B">KK1B</option>
-                            <option value="KK2A">KK2A</option>
-                            <option value="KK2B">KK2B</option>
-                            <option value="KK2C">KK2C</option>
-                            <option value="KK5G">KK5G</option>
-                            <option value="KK7K">KK7K</option>
-                            <option value="KK7L">KK7L</option>
-                            <option value="KK8D">KK8D</option>
-                            <option value="KK8F">KK8F</option>
-                            <option value="KK8J">KK8J</option>
-                            <option value="KK8J4">KK8J4</option>
-                            <option value="KK8J5">KK8J5</option>
-                            <option value="KK8J6">KK8J6</option>
-                            <option value="KK9D">KK9D</option>
-                            <option value="KK10E">KK10E</option>
-                            <option value="KK11M">KK11M</option>
-                            <option value="KKMONITORING">KK MONITORING</option>
+                            <option value="KK1A" {{ old('area', $item->area ?? '') == 'KK1A' ? 'selected' : '' }}>KK1A</option>
+                            <option value="KK1B" {{ old('area', $item->area ?? '') == 'KK1B' ? 'selected' : '' }}>KK1B</option>
+                            <option value="KK2A" {{ old('area', $item->area ?? '') == 'KK2A' ? 'selected' : '' }}>KK2A</option>
+                            <option value="KK2B" {{ old('area', $item->area ?? '') == 'KK2B' ? 'selected' : '' }}>KK2B</option>
+                            <option value="KK2C" {{ old('area', $item->area ?? '') == 'KK2C' ? 'selected' : '' }}>KK2C</option>
+                            <option value="KK5G" {{ old('area', $item->area ?? '') == 'KK5G' ? 'selected' : '' }}>KK5G</option>
+                            <option value="KK7K" {{ old('area', $item->area ?? '') == 'KK7K' ? 'selected' : '' }}>KK7K</option>
+                            <option value="KK7L" {{ old('area', $item->area ?? '') == 'KK7L' ? 'selected' : '' }}>KK7L</option>
+                            <option value="KK8D" {{ old('area', $item->area ?? '') == 'KK8D' ? 'selected' : '' }}>KK8D</option>
+                            <option value="KK8F" {{ old('area', $item->area ?? '') == 'KK8F' ? 'selected' : '' }}>KK8F</option>
+                            <option value="KK8J" {{ old('area', $item->area ?? '') == 'KK8J' ? 'selected' : '' }}>KK8J</option>
+                            <option value="KK8J4" {{ old('area', $item->area ?? '') == 'KK8J4' ? 'selected' : '' }}>KK8J4</option>
+                            <option value="KK8J5" {{ old('area', $item->area ?? '') == 'KK8J5' ? 'selected' : '' }}>KK8J5</option>
+                            <option value="KK8J6" {{ old('area', $item->area ?? '') == 'KK8J6' ? 'selected' : '' }}>KK8J6</option>
+                            <option value="KK9D" {{ old('area', $item->area ?? '') == 'KK9D' ? 'selected' : '' }}>KK9D</option>
+                            <option value="KK10E" {{ old('area', $item->area ?? '') == 'KK10E' ? 'selected' : '' }}>KK10E</option>
+                            <option value="KK11M" {{ old('area', $item->area ?? '') == 'KK11M' ? 'selected' : '' }}>KK11M</option>
+                            <option value="KKMONITORING" {{ old('area', $item->area ?? '') == 'KKMONITORING' ? 'selected' : '' }}>KK MONITORING</option>
                         </select>
                     </div>
                     <div>
@@ -140,7 +178,9 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="qty_erp" id="qty_erp" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                                        <input type="number" name="qty_erp" id="qty_erp" 
+                                        value="{{ old('qty_erp', $item->qty_erp ?? '') }}"
+                                        class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <span id="selisih_erp_timter" class="text-sm text-gray-900"></span>
@@ -172,7 +212,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_erp" id="ket_erp" rows="2" required></textarea>
+                                        <textarea name="ket_erp" id="ket_erp" rows="2" required>{{ old('ket_erp', $item->ket_erp ?? '') }}</textarea>
                                     </td>
                                 </tr>
 
@@ -193,7 +233,9 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="qty_timter" id="qty_timter" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                                        <input type="number" name="qty_timter" id="qty_timter" 
+                                        value="{{ old('qty_timter', $item->qty_timter ?? '') }}"
+                                        class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -224,7 +266,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_timter" id="ket_timter" rows="2" required></textarea>
+                                        <textarea name="ket_timter" id="ket_timter" rows="2" required>{{ old('ket_timter', $item->ket_timter ?? '') }}</textarea>
                                     </td>
                                 </tr>
 
@@ -245,7 +287,9 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="qty_summary" id="qty_summary" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                                        <input type="number" name="qty_summary" id="qty_summary" 
+                                        value="{{ old('qty_summary', $item->qty_summary ?? '') }}"
+                                        class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -275,7 +319,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_summary" id="ket_summary" rows="2" required></textarea>
+                                        <textarea name="ket_summary" id="ket_summary" rows="2" required>{{ old('ket_summary', $item->ket_summary ?? '') }}</textarea>
                                     </td>
                                 </tr>
 
@@ -296,7 +340,9 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="qty_running" id="qty_running" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                                        <input type="number" name="qty_running" id="qty_running" 
+                                        value="{{ old('qty_running', $item->qty_running ?? '') }}"
+                                        class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -325,7 +371,7 @@
                                         </span>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_running" id="ket_running" rows="2" required></textarea>
+                                        <textarea name="ket_running" id="ket_running" rows="2" required>{{ old('ket_running', $item->ket_running ?? '') }}</textarea>
                                     </td>
                                 </tr>
 
@@ -346,7 +392,9 @@
                                         </div>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="1">
-                                        <input type="number" name="qty_apk" id="qty_apk" class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                                        <input type="number" name="qty_apk" id="qty_apk" 
+                                        value="{{ old('qty_apk', $item->qty_apk ?? '') }}"
+                                        class="w-full text-center border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200">
                                         <!-- Kosongkan -->
@@ -373,7 +421,7 @@
                                         <!-- Kosongkan -->
                                     </td>
                                     <td class="px-3 py-4 text-center border-r border-gray-200" colspan="2">
-                                        <textarea name="ket_apk" id="ket_apk" rows="2" required></textarea>
+                                        <textarea name="ket_apk" id="ket_apk" rows="2" required>{{ old('ket_apk', $item->ket_apk ?? '') }}</textarea>
                                     </td>
                                 </tr>
                             </tbody>
@@ -386,22 +434,26 @@
                     <div>
                         <label for="qty_reject" class="block text-sm font-medium text-gray-700 mb-1">Qty Reject</label>
                         <input type="number" id="qty_reject" name="qty_reject"
+                        value="{{ old('qty_reject', $item->qty_reject ?? '') }}"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
                         <label for="qty_rework" class="block text-sm font-medium text-gray-700 mb-1">Qty Rework</label>
                         <input type="number" id="qty_rework" name="qty_rework"
+                        value="{{ old('qty_rework', $item->qty_rework ?? '') }}"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                     </div>
                     <div>
                         <label for="ket_reject" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Reject</label>
                         <textarea name="ket_reject" id="ket_reject" cols="30" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>{{ old('ket_reject', $item->ket_reject ?? '') }}
+                        </textarea>
                     </div>
                     <div>
                         <label for="ket_rework" class="block text-sm font-medium text-gray-700 mb-1">Keterangan Rework</label>
                         <textarea name="ket_rework" id="ket_rework" cols="30" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>{{ old('ket_rework', $item->ket_rework ?? '') }}
+                        </textarea>
                     </div>
                 </div>
                 <div class="mt-4">
@@ -685,5 +737,21 @@
     capacityInput.addEventListener('input', updateSummaryCapacity);
     capacityInput.addEventListener('input', updateRunningCapacity);
 </script>
-  
+<script>
+    const toggle = document.getElementById('dropdownToggle');
+    const menu = document.getElementById('dropdownMenu');
+
+    toggle.addEventListener('click', () => {
+        menu.classList.toggle('opacity-0');
+        menu.classList.toggle('scale-95');
+        menu.classList.toggle('translate-y-1');
+        menu.classList.toggle('pointer-events-none');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('opacity-0', 'scale-95', 'translate-y-1', 'pointer-events-none');
+        }
+    });
+</script>
 @endpush

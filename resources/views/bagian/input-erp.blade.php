@@ -28,46 +28,65 @@
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="flex justify-between items-center px-6 py-4 border-b">
-            <h2 class="text-xl font-bold">INPUT JAM SELESAI ERP MESIN</h2>
+            <h2 class="text-xl font-bold">
+                @if(isset($item))
+                EDIT JAM SELESAI ERP MESIN
+                @else
+                INPUT JAM SELESAI ERP MESIN
+                @endif
+            </h2>
         </div>
         <div class="px-6 py-4">
-            <form action="{{route('inputErp.store')}}" method="POST">
+            @php
+                $isEdit = isset($item);
+                $formAction = $isEdit
+                    ? route('inputErp.update', ['id' => $item->id_input])
+                    : route('inputErp.store');
+            @endphp
+            <form action="{{ $formAction }}" method="POST">
                 @csrf
+                @if($isEdit)
+                    @method('PUT')
+                @endif
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label for="tanggal_input" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
                     <input type="date" id="tanggal_input" name="tanggal_input"
+                    value="{{ old('tanggal_input', $item->tanggal_input ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div>
                     <label for="area" class="block text-sm font-medium text-gray-700 mb-1">Area</label>
                         <select name="area" id="area"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                             <option value="">Pilih Area</option>
-                            <option value="KK1A">KK1A</option>
-                            <option value="KK1B">KK1B</option>
-                            <option value="KK2A">KK2A</option>
-                            <option value="KK2B">KK2B</option>
-                            <option value="KK2C">KK2C</option>
-                            <option value="KK5G">KK5G</option>
-                            <option value="KK7K">KK7K</option>
-                            <option value="KK7L">KK7L</option>
-                            <option value="KK8D">KK8D</option>
-                            <option value="KK8F">KK8F</option>
-                            <option value="KK8J">KK8J</option>
-                            <option value="KK8J4">KK8J4</option>
-                            <option value="KK8J5">KK8J5</option>
-                            <option value="KK8J6">KK8J6</option>
-                            <option value="KK9D">KK9D</option>
-                            <option value="KK10E">KK10E</option>
-                            <option value="KK11M">KK11M</option>
-                            <option value="KKMONITORING">KK MONITORING</option>
+                            <option value="KK1A" {{ old('area', $item->area ?? '') == 'KK1A' ? 'selected' : '' }}>KK1A</option>
+                            <option value="KK1B" {{ old('area', $item->area ?? '') == 'KK1B' ? 'selected' : '' }}>KK1B</option>
+                            <option value="KK2A" {{ old('area', $item->area ?? '') == 'KK2A' ? 'selected' : '' }}>KK2A</option>
+                            <option value="KK2B" {{ old('area', $item->area ?? '') == 'KK2B' ? 'selected' : '' }}>KK2B</option>
+                            <option value="KK2C" {{ old('area', $item->area ?? '') == 'KK2C' ? 'selected' : '' }}>KK2C</option>
+                            <option value="KK5G" {{ old('area', $item->area ?? '') == 'KK5G' ? 'selected' : '' }}>KK5G</option>
+                            <option value="KK7K" {{ old('area', $item->area ?? '') == 'KK7K' ? 'selected' : '' }}>KK7K</option>
+                            <option value="KK7L" {{ old('area', $item->area ?? '') == 'KK7L' ? 'selected' : '' }}>KK7L</option>
+                            <option value="KK8D" {{ old('area', $item->area ?? '') == 'KK8D' ? 'selected' : '' }}>KK8D</option>
+                            <option value="KK8F" {{ old('area', $item->area ?? '') == 'KK8F' ? 'selected' : '' }}>KK8F</option>
+                            <option value="KK8J" {{ old('area', $item->area ?? '') == 'KK8J' ? 'selected' : '' }}>KK8J</option>
+                            <option value="KK8J4" {{ old('area', $item->area ?? '') == 'KK8J4' ? 'selected' : '' }}>KK8J4</option>
+                            <option value="KK8J5" {{ old('area', $item->area ?? '') == 'KK8J5' ? 'selected' : '' }}>KK8J5</option>
+                            <option value="KK8J6" {{ old('area', $item->area ?? '') == 'KK8J6' ? 'selected' : '' }}>KK8J6</option>
+                            <option value="KK9D" {{ old('area', $item->area ?? '') == 'KK9D' ? 'selected' : '' }}>KK9D</option>
+                            <option value="KK10E" {{ old('area', $item->area ?? '') == 'KK10E' ? 'selected' : '' }}>KK10E</option>
+                            <option value="KK11M" {{ old('area', $item->area ?? '') == 'KK11M' ? 'selected' : '' }}>KK11M</option>
+                            <option value="KKMONITORING" {{ old('area', $item->area ?? '') == 'KKMONITORING' ? 'selected' : '' }}>KK MONITORING</option>
                         </select>
                 </div>
                 <div>
                     <label for="shift" class="block text-sm font-medium text-gray-700 mb-1">Shift</label>
-                    <input type="text" id="shift" name="shift" placeholder="NON SHIFT" value="NON SHIFT"
-                           class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" readonly>
+                    <select name="shift" id="shift" class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                        <option value="">Pilih Shift</option>
+                        <option value="SHIFT" {{ old('shift', $item->shift ?? '') == 'SHIFT' ? 'selected' : '' }}>SHIFT</option>
+                        <option value="NON SHIFT" {{ old('shift', $item->shift ?? '') == 'NON SHIFT' ? 'selected' : '' }}>NON SHIFT</option>
+                    </select>
                 </div>
             </div>
 
@@ -92,16 +111,19 @@
                 <div class=" mt-2">
                     <label for="start_input" class="block text-sm font-medium text-gray-700 mb-1">Start Input</label>
                     <input type="time" id="start_input" name="start_input"
+                    value="{{ old('start_input', $item->start_input ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div class=" mt-2">
                     <label for="stop_input" class="block text-sm font-medium text-gray-700 mb-1">Stop Input</label>
                     <input type="time" id="stop_input" name="stop_input"
+                    value="{{ old('stop_input', $item->stop_input ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div class=" mt-2">
                     <label for="ttl_mc" class="block text-sm font-medium text-gray-700 mb-1">Total MC</label>
                     <input type="number" id="ttl_mc" name="ttl_mc"
+                    value="{{ old('ttl_mc', $item->ttl_mc ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
             </div>
@@ -109,18 +131,20 @@
                 <div class=" mt-2">
                     <label for="jln_mc" class="block text-sm font-medium text-gray-700 mb-1">Jalan MC</label>
                     <input type="number" id="jln_mc" name="jln_mc"
+                    value="{{ old('jln_mc', $item->jln_mc ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div class=" mt-2">
                     <label for="prod_erp" class="block text-sm font-medium text-gray-700 mb-1">Prod ERP</label>
                     <input type="number" id="prod_erp" name="prod_erp" step="0.01"
+                    value="{{ old('prod_erp', $item->prod_erp ?? '') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
             </div>
             <div class=" mt-2">
                 <label for="ket" class="block text-sm font-medium text-gray-700 mb-1">Keterangan ERP</label>
                 <textarea name="ket" id="ket" cols="30" rows="3"
-                          class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
+                          class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>{{ old('ket', $item->ket ?? '') }}</textarea>
             </div>
             <div class="mt-4">
                 <button type="submit"
