@@ -8,6 +8,7 @@ use App\Services\CapacityService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\KronologiKesalahanImport;
+use PDF;
 
 class KronologiController extends Controller
 {
@@ -118,5 +119,30 @@ class KronologiController extends Controller
         $kronologi = kronologi::findOrFail($id);
         $kronologi->delete();
         return redirect()->route('kronologi.index')->with('success', 'Kronologi entry deleted successfully.');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'from' => 'required|date',
+            'to'   => 'required|date|after_or_equal:from',
+        ]);
+
+        $from = $request->input('from');
+        $to   = $request->input('to');
+
+        // Query dengan whereBetween
+        $items = kronologi::whereBetween('tanggal', [$from, $to])
+            ->orderBy('tanggal')
+            ->get();
+
+        // Load view, kirim juga rentang tanggal
+        $pdf = PDF::loadView('monitoring.kronologi.pdf', compact('items', 'from', 'to'))
+            ->setPaper('a4', 'landscape')
+            ->setOption('margin-top', '10mm')
+            ->setOption('margin-bottom', '10mm');
+
+        return $pdf->download("kronologi_{$from}_to_{$to}.pdf");
     }
 }

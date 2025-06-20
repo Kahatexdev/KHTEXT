@@ -28,7 +28,11 @@ class UserController extends Controller
         }
         $pengumuman = pengumuman::latest()->paginate(10);
         $kronologi = kronologi::latest()->paginate(10);
-        return view('monitoring.dashboard', compact('pengumuman', 'kronologi'));
+        $totalUsers = User::count();
+        $pengumumanCount = pengumuman::count();
+        $kronologiCount = kronologi::count();
+        $fileCount = pengumuman::whereNotNull('file_attachment')->count();
+        return view('monitoring.dashboard', compact('pengumuman', 'kronologi', 'totalUsers', 'pengumumanCount', 'kronologiCount', 'fileCount'));
     }
     public function indexUser()
     {
@@ -36,7 +40,7 @@ class UserController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $pengumuman = pengumuman::latest()->paginate(10);
+        $pengumuman = pengumuman::latest()->paginate(5);
         return view('user.dashboard', compact('pengumuman'));
     }
 
