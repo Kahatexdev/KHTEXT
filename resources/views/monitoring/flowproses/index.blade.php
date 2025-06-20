@@ -14,10 +14,10 @@
                 <p class="text-sm text-gray-600">Kelola Flow Proses</p>
             </div>
             <div>
-                <a href="{{ route('flowproses.create') }}"
+                {{-- <a href="{{ route('flowproses.create') }}"
                     class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition inline-flex items-center">
                     <i class="fas fa-plus mr-2"></i>Tambah Flow Proses
-                </a>
+                </a> --}}
                 <button id="openImportModalButton"
                     class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
                     <i class="fas fa-file-import mr-2"></i>Import Excel
@@ -37,7 +37,7 @@
                         <th>Size</th>
                         <th>Inisial</th>
                         <th>Tanggal</th>
-                        <th>Jumlah Proses</th>
+                        {{-- <th>Jumlah Proses</th> --}}
                         <th>Detail Proses</th>
                         <th>Admin</th>
                         <th>Aksi</th>
@@ -54,7 +54,7 @@
                             <td>{{ $style['size'] ?? '-' }}</td>
                             <td>{{ $style['inisial'] ?? '-' }}</td>
                             <td>{{ \Carbon\Carbon::parse($flow->tanggal)->format('Y-m-d') }}</td>
-                            <td class="text-center">{{ $flow->flowProses->count() }}</td>
+                            {{-- <td class="text-center">{{ $flow->flowProses->count() }}</td> --}}
                             <td>
                                 <ul class="list-disc list-inside space-y-1">
                                     @foreach ($flow->flowProses as $fp)

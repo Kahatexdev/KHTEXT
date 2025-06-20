@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('kronologi', KronologiController::class);
     Route::post('import/kronologi', [KronologiController::class, 'import'])->name('import.kronologi.process');
+    Route::get('exportPdf', [KronologiController::class, 'exportPdf'])->name('kronologi.pdf');
 });
 
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {

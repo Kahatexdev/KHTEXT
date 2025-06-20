@@ -48,6 +48,27 @@
             </form>
         </div>
 
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-semibold mb-2">Export PDF Berdasarkan Tanggal</h2>
+            <form action="{{ route('kronologi.pdf') }}" method="GET" class="flex flex-col sm:flex-row items-end space-y-4 sm:space-y-0 sm:space-x-4">
+                @csrf
+                <div>
+                    <label for="from" class="block text-sm font-medium text-gray-700">Dari Tanggal</label>
+                    <input type="date" name="from" id="from" value="{{ request('from') }}"
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                </div>
+                <div>
+                    <label for="to" class="block text-sm font-medium text-gray-700">Sampai Tanggal</label>
+                    <input type="date" name="to" id="to" value="{{ request('to') }}"
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
+                </div>
+                <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition-colors text-sm">
+                    Export PDF
+                </button>
+            </form>
+        </div>
+        
         {{-- Data Table Card --}}
         @if (isset($kronologi) && $kronologi->count())
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
