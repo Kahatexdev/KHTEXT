@@ -23,7 +23,6 @@ class TbCekqtyController extends Controller
         return view('bagian.mesin');
     }
 
-    // Simpan data ke database
     public function store(Request $request)
     {
         $idUser = Auth::user()->id;
@@ -83,7 +82,6 @@ class TbCekqtyController extends Controller
             'ket_apk'       => 'string|max:255',
             'shift'         => 'required|string|max:10',
         ]);
-        // dd ($validated);
         // Update data berdasarkan PK
         tb_cekqty::where('id_cekqty', $id)->update([
             'tanggal_input' => $validated['tanggal_input'],
@@ -111,42 +109,11 @@ class TbCekqtyController extends Controller
     public function destroy($id)
     {
         tb_cekqty::destroy($id);
-        return redirect()->back()->with('success', 'User dihapus');
+        return redirect()->back()->with('success', 'Data dihapus');
     }
 
     public function exportExcel()
     {
         return Excel::download(new TbCekqtyExport, 'data-cekqty.xlsx');
-    }
-
-    public function inputErp()
-    {
-        $records = input_erp::orderBy('tanggal_input', 'desc')->get();
-
-        return view('bagian.report.tabel-input-erp', compact('records'));
-    }
-    public function createInputErp()
-    {
-        return view('bagian.input-erp');
-    }
-
-    public function storeErp(Request $request)
-    {
-        $idUser = Auth::user()->id;
-        $validated = $request->validate([
-            'tanggal_input' => 'required|date',
-            'area'          => 'required|string|max:100',
-            'shift'         => 'required|string|max:10',
-            'start_input'   => 'nullable',
-            'stop_input'    => 'nullable',
-            'ttl_mc'        => 'nullable|integer',
-            'jln_mc'        => 'nullable|integer',
-            'prod_erp'      => 'nullable|numeric',
-            'ket'           => 'nullable|string|max:255',
-        ]);
-        $validated['id_user'] = $idUser;
-        input_erp::create($validated);
-
-        return redirect()->route('mesin.inputErp')->with('success', 'Data berhasil disimpan!');
     }
 }

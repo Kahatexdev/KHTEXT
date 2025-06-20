@@ -11,6 +11,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\FlowProsesController;
 use App\Http\Controllers\TbCekqtyController;
 use App\Http\Controllers\TbCekqtyRossetController;
+use App\Http\Controllers\InputErpController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -86,9 +87,12 @@ Route::middleware('auth')->group(function () {
         Route::delete('mesin/delete/{id}', [TbCekqtyController::class, 'destroy'])->name('mesin.destroy');
         Route::get('mesin/exportExcel', [TbCekqtyController::class, 'exportExcel'])->name('mesin.exportExcel');
 
-        Route::get('mesin/inputErp', [TbCekqtyController::class, 'inputErp'])->name('mesin.inputErp');
-        Route::get('mesin/inputErp/create', [TbCekqtyController::class, 'createInputErp'])->name('mesin.createInputErp');
-        Route::post('mesin/inputErp/store', [TbCekqtyController::class, 'storeErp'])->name('inputErp.store');
+        Route::get('mesin/inputErp', [InputErpController::class, 'inputErp'])->name('mesin.inputErp');
+        Route::get('mesin/inputErp/create', [InputErpController::class, 'createInputErp'])->name('mesin.createInputErp');
+        Route::post('mesin/inputErp/store', [InputErpController::class, 'storeErp'])->name('inputErp.store');
+        Route::get('mesin/inputErp/edit/{id}', [InputErpController::class, 'editErp'])->name('inputErp.edit');
+        Route::put('mesin/inputErp/update/{id}', [InputErpController::class, 'updateErp'])->name('inputErp.update');
+        Route::delete('mesin/inputErp/delete/{id}', [InputErpController::class, 'destroy'])->name('inputErp.destroy');
     });
     Route::resource('absen', AbsenController::class);
     Route::get('exportExcelAbsen', [AbsenController::class, 'export'])->name('absen.export');
