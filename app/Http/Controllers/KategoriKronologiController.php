@@ -14,7 +14,8 @@ class KategoriKronologiController extends Controller
      */
     public function index()
     {
-        $data = kategori_kronologi::all();
+        $data = kategori_kronologi::orderBy('nama_kategori', 'asc')
+            ->paginate(10);
         return view('monitoring.kategori_kronologi.index', compact('data'));
     }
 
@@ -33,7 +34,6 @@ class KategoriKronologiController extends Controller
     {
         $validated = $request->validate([
             'nama_kategori' => 'required|string|max:100',
-            'ket_kategori' => 'required|string',
         ]);
 
         kategori_kronologi::create($validated);
@@ -57,7 +57,6 @@ class KategoriKronologiController extends Controller
     {
         $validated = $request->validate([
             'nama_kategori' => 'required|string|max:100',
-            'ket_kategori' => 'required|string',
         ]);
 
         $kategoriKronologi->update($validated);

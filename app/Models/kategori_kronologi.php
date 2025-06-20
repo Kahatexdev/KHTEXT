@@ -15,7 +15,6 @@ class kategori_kronologi extends Model
 
     protected $fillable = [
         'nama_kategori',
-        'ket_kategori',
     ];
 
     public function getRouteKeyName()
