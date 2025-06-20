@@ -1,6 +1,28 @@
 @extends('layouts.app')
 @section('title', 'Bagian Mesin')
 
+@section('navbar-report-mesin')
+<li class="relative flex items-center pl-4">
+    <div class="relative">
+        <button
+            id="dropdownToggle"
+            type="button"
+            class="flex items-center px-3 py-2 font-semibold text-sm text-slate-600 hover:text-slate-800 focus:outline-none focus:ring focus:ring-slate-300 rounded-md transition">
+            <span class="hidden sm:inline">Report</span>
+            <svg class="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+        </button>
+
+        <div
+            id="dropdownMenu"
+            class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50 py-2 opacity-0 scale-95 translate-y-1 pointer-events-none transition-all duration-200 ease-out">
+            <a href="{{ route('mesin.inputErp')}}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-gray-100">REPORT JAM SELESAI ERP</a>
+        </div>
+    </div>
+</li>
+@endsection
+
 @section('content')
 <div class="w-full px-2 sm:px-4 py-4 sm:py-6 mx-auto space-y-4 sm:space-y-6">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -8,11 +30,12 @@
             <h2 class="text-xl font-bold">INPUT JAM SELESAI ERP MESIN</h2>
         </div>
         <div class="px-6 py-4">
-            <form action="">
+            <form action="{{route('inputErp.store')}}" method="POST">
+                @csrf
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label for="tanggalCrossCheck" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
-                    <input type="date" id="tanggalCrossCheck" name="tanggalCrossCheck"
+                    <label for="tanggal_input" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Cross Check</label>
+                    <input type="date" id="tanggal_input" name="tanggal_input"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div>
@@ -42,7 +65,7 @@
                 </div>
                 <div>
                     <label for="shift" class="block text-sm font-medium text-gray-700 mb-1">Shift</label>
-                    <input type="text" id="shift" name="shift" placeholder="NON SHIFT"
+                    <input type="text" id="shift" name="shift" placeholder="NON SHIFT" value="NON SHIFT"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" readonly>
                 </div>
             </div>
@@ -76,26 +99,26 @@
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div class=" mt-2">
-                    <label for="total_mc" class="block text-sm font-medium text-gray-700 mb-1">Total MC</label>
-                    <input type="text" id="total_mc" name="total_mc"
+                    <label for="ttl_mc" class="block text-sm font-medium text-gray-700 mb-1">Total MC</label>
+                    <input type="number" id="ttl_mc" name="ttl_mc"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div class=" mt-2">
-                    <label for="jalan_mc" class="block text-sm font-medium text-gray-700 mb-1">Jalan MC</label>
-                    <input type="text" id="jalan_mc" name="jalan_mc"
+                    <label for="jln_mc" class="block text-sm font-medium text-gray-700 mb-1">Jalan MC</label>
+                    <input type="number" id="jln_mc" name="jln_mc"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
                 <div class=" mt-2">
                     <label for="prod_erp" class="block text-sm font-medium text-gray-700 mb-1">Prod ERP</label>
-                    <input type="text" id="prod_erp" name="prod_erp"
+                    <input type="number" id="prod_erp" name="prod_erp" step="0.01"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                 </div>
             </div>
             <div class=" mt-2">
-                <label for="keterangan_erp" class="block text-sm font-medium text-gray-700 mb-1">Keterangan ERP</label>
-                <textarea name="keterangan_erp" id="keterangan_erp" cols="30" rows="3"
+                <label for="ket" class="block text-sm font-medium text-gray-700 mb-1">Keterangan ERP</label>
+                <textarea name="ket" id="ket" cols="30" rows="3"
                           class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required></textarea>
             </div>
             <div class="mt-4">
@@ -113,4 +136,21 @@
 @endsection
 
 @push('scripts')
+<script>
+    const toggle = document.getElementById('dropdownToggle');
+    const menu = document.getElementById('dropdownMenu');
+
+    toggle.addEventListener('click', () => {
+        menu.classList.toggle('opacity-0');
+        menu.classList.toggle('scale-95');
+        menu.classList.toggle('translate-y-1');
+        menu.classList.toggle('pointer-events-none');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('opacity-0', 'scale-95', 'translate-y-1', 'pointer-events-none');
+        }
+    });
+</script>
 @endpush

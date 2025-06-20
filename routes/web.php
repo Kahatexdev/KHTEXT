@@ -82,6 +82,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth')->prefix('bagian')->group(function () {
         Route::resource('mesin', TbCekqtyController::class)->except(['show']);
         Route::get('mesin/exportExcel', [TbCekqtyController::class, 'exportExcel'])->name('mesin.exportExcel');
+        Route::get('mesin/inputErp', [TbCekqtyController::class, 'inputErp'])->name('mesin.inputErp');
+        Route::get('mesin/inputErp/create', [TbCekqtyController::class, 'createInputErp'])->name('mesin.createInputErp');
+        Route::post('mesin/inputErp/store', [TbCekqtyController::class, 'storeErp'])->name('inputErp.store');
     });
     Route::resource('absen', AbsenController::class);
     Route::get('exportExcelAbsen', [AbsenController::class, 'export'])->name('absen.export');

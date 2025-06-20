@@ -259,33 +259,6 @@
                     <span class="ml-1">Report Data</span>
                 </a>
             </li>
-            @php
-                $routeName = 'mesin.index';
-                $isActive = request()->routeIs($routeName);
-            @endphp
-            <li>
-                <a href="{{ route($routeName) }}"
-                    class="flex items-center px-4 py-2 text-sm transition-colors
-                          {{ $isActive ? 'bg-white shadow-soft-xl rounded-lg font-semibold text-slate-700' : '' }}">
-                    <div
-                        class="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5
-                          {{ $isActive ? 'bg-gradient-to-tl from-info-700 to-cyan-500' : 'bg-white' }}">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 20V12L6 9H3V20H9Z" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M21 20V8L15 12V20H21Z" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            <path d="M12 4V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            <path d="M18 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            <path d="M6 16H8M17 16H19" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                    </div>
-                    <span class="ml-1">Mesin</span>
-                </a>
-            </li>
 
             @if ($role === 'monitoring')
                 @php

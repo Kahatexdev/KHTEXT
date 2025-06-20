@@ -7,6 +7,7 @@ use App\Models\tb_cekqty;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TbCekqtyExport;
+use App\Models\input_erp;
 
 class TbCekqtyController extends Controller
 {
@@ -54,5 +55,36 @@ class TbCekqtyController extends Controller
     public function exportExcel()
     {
         return Excel::download(new TbCekqtyExport, 'data-cekqty.xlsx');
+    }
+
+    public function inputErp()
+    {
+        $records = input_erp::orderBy('tanggal_input', 'desc')->get();
+
+        return view('bagian.report.tabel-input-erp', compact('records'));
+    }
+    public function createInputErp()
+    {
+        return view('bagian.input-erp');
+    }
+
+    public function storeErp(Request $request)
+    {
+        $idUser = Auth::user()->id;
+        $validated = $request->validate([
+            'tanggal_input' => 'required|date',
+            'area'          => 'required|string|max:100',
+            'shift'         => 'required|string|max:10',
+            'start_input'   => 'nullable',
+            'stop_input'    => 'nullable',
+            'ttl_mc'        => 'nullable|integer',
+            'jln_mc'        => 'nullable|integer',
+            'prod_erp'      => 'nullable|numeric',
+            'ket'           => 'nullable|string|max:255',
+        ]);
+        $validated['id_user'] = $idUser;
+        input_erp::create($validated);
+
+        return redirect()->route('mesin.inputErp')->with('success', 'Data berhasil disimpan!');
     }
 }
