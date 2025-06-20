@@ -14,12 +14,12 @@
         {{-- Header --}}
         <div class="flex items-center justify-between bg-white p-4 rounded-xl shadow">
             <div>
-                <h2 class="text-2xl font-semibold text-gray-800">Data Kategori Kronologi</h2>
-                <p class="text-sm text-gray-500">Kelola semua Kategori Kronologi di sini</p>
+                <h2 class="text-xl font-bold">Data Kategori Kronologi</h2>
+                <p class="text-sm text-gray-500">Kelola semua kategori kronologi di sini</p>
             </div>
-            <button id="openModal" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Tambah Kategori
-            </button>
+            <button id="openModal" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+                <i class="fas fa-plus mr-1"></i>Tambah
+              </button>
         </div>
 
         <div class="bg-white shadow rounded-lg overflow-hidden">
@@ -39,20 +39,18 @@
                                 {{ $loop->iteration + 1 }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900">{{ $item->nama_kategori }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700">{{ $item->ket_kategori }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-700 text-right space-x-2">
+                            <td class="px-6 py-4 text-sm text-gray-700 space-x-2">
                                 <button
-                                    class="editBtn inline-flex items-center px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm"
+                                    class="editBtn bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                     data-id="{{ $item->id_kategori }}" data-nama="{{ $item->nama_kategori }}"
                                     data-ket="{{ $item->ket_kategori }}">
-                                    <i class="fas fa-edit mr-1.5 text-xs"></i>
-                                    Edit
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button type="button"
-                                    class="deleteBtn inline-flex items-center px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-all duration-200 text-sm font-medium hover:shadow-sm"
+                                    class="deleteBtn bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-sm hover:shadow-md"
                                     data-id="{{ $item->id_kategori }}"
                                     data-url="{{ route('kategori_kronologi.destroy', $item->id_kategori) }}">
-                                    <i class="fas fa-trash mr-1.5 text-xs"></i>
-                                    Hapus
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
