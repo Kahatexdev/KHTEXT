@@ -53,4 +53,70 @@ class KronologiController extends Controller
 
         return redirect()->back()->with('success', 'Data berhasil diimport!');
     }
+
+    public function edit($id)
+    {
+        $kronologi = kronologi::findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'data' => $kronologi,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd ($request->all());
+        $request->validate([
+            'tanggal' => 'required|date',
+            'wip' => 'required|string',
+            'area' => 'required|string',
+            'no_model_salah' => 'required|string',
+            'style_salah' => 'required|string',
+            'label_salah' => 'required|string',
+            'no_mc_salah' => 'required|string',
+            'krj_salah' => 'required|string',
+            'qty_salah' => 'required|integer',
+            'no_model_benar' => 'required|string',
+            'style_benar' => 'required|string',
+            'label_benar' => 'required|string',
+            'no_mc_benar' => 'required|string',
+            'krj_benar' => 'required|string',
+            'qty_benar' => 'required|integer',
+            'kategori' => 'required',
+            'keterangan' => 'required|string',
+            'keterangan_maintenance' => 'nullable|string',
+            'username' => 'required|string',
+        ]);
+        $kronologi = kronologi::findOrFail($id);
+        $kronologi->update([
+            'tanggal' => $request->tanggal,
+            'wip' => $request->wip,
+            'area' => $request->area,
+            'no_model_salah' => $request->no_model_salah,
+            'style_salah' => $request->style_salah,
+            'label_salah' => $request->label_salah,
+            'no_mc_salah' => $request->no_mc_salah,
+            'krj_salah' => $request->krj_salah,
+            'qty_salah' => $request->qty_salah,
+            'no_model_benar' => $request->no_model_benar,
+            'style_benar' => $request->style_benar,
+            'label_benar' => $request->label_benar,
+            'no_mc_benar' => $request->no_mc_benar,
+            'krj_benar' => $request->krj_benar,
+            'qty_benar' => $request->qty_benar,
+            'kategori' => $request->kategori,
+            'keterangan' => $request->keterangan,
+            'keterangan_maintenance' => $request->keterangan_maintenance ?? '',
+            'username' => $request->username,
+        ]);
+        return redirect()->route('kronologi.index')->with('success', 'Kronologi entry updated successfully.');
+        
+    }
+
+    public function destroy($id)
+    {
+        $kronologi = kronologi::findOrFail($id);
+        $kronologi->delete();
+        return redirect()->route('kronologi.index')->with('success', 'Kronologi entry deleted successfully.');
+    }
 }

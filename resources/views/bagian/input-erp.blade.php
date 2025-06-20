@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Bagian Mesin')
+@section('page-title', 'Bagian Mesin')
 
 @section('navbar-report-mesin')
 <li class="relative flex items-center pl-4">

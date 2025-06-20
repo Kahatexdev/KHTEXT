@@ -1,6 +1,7 @@
 {{-- resources/views/monitoring/area/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Area')
+@section('page-title', 'Area')
 
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">

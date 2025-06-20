@@ -94,7 +94,7 @@ Route::middleware('auth')->group(function () {
     Route::get('getInisialByModel', [FlowProsesController::class, 'getInisialByModel'])
         ->name('flowproses.getInisialByModel');
 
-    Route::get('/kronologi', [KronologiController::class, 'index'])->name('kronologi.index');
+    Route::resource('kronologi', KronologiController::class);
     Route::post('import/kronologi', [KronologiController::class, 'import'])->name('import.kronologi.process');
 });
 
