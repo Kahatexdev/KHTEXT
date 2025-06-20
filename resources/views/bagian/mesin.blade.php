@@ -60,24 +60,24 @@
                         <select name="area" id="area"
                             class="w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm" required>
                             <option value="">Pilih Area</option>
-                            <option value="KK1A">KK1A</option>
-                            <option value="KK1B">KK1B</option>
-                            <option value="KK2A">KK2A</option>
-                            <option value="KK2B">KK2B</option>
-                            <option value="KK2C">KK2C</option>
-                            <option value="KK5G">KK5G</option>
-                            <option value="KK7K">KK7K</option>
-                            <option value="KK7L">KK7L</option>
-                            <option value="KK8D">KK8D</option>
-                            <option value="KK8F">KK8F</option>
-                            <option value="KK8J">KK8J</option>
-                            <option value="KK8J4">KK8J4</option>
-                            <option value="KK8J5">KK8J5</option>
-                            <option value="KK8J6">KK8J6</option>
-                            <option value="KK9D">KK9D</option>
-                            <option value="KK10E">KK10E</option>
-                            <option value="KK11M">KK11M</option>
-                            <option value="KKMONITORING">KK MONITORING</option>
+                            <option value="KK1A" {{ old('area', $item->area ?? '') == 'KK1A' ? 'selected' : '' }}>KK1A</option>
+                            <option value="KK1B" {{ old('area', $item->area ?? '') == 'KK1B' ? 'selected' : '' }}>KK1B</option>
+                            <option value="KK2A" {{ old('area', $item->area ?? '') == 'KK2A' ? 'selected' : '' }}>KK2A</option>
+                            <option value="KK2B" {{ old('area', $item->area ?? '') == 'KK2B' ? 'selected' : '' }}>KK2B</option>
+                            <option value="KK2C" {{ old('area', $item->area ?? '') == 'KK2C' ? 'selected' : '' }}>KK2C</option>
+                            <option value="KK5G" {{ old('area', $item->area ?? '') == 'KK5G' ? 'selected' : '' }}>KK5G</option>
+                            <option value="KK7K" {{ old('area', $item->area ?? '') == 'KK7K' ? 'selected' : '' }}>KK7K</option>
+                            <option value="KK7L" {{ old('area', $item->area ?? '') == 'KK7L' ? 'selected' : '' }}>KK7L</option>
+                            <option value="KK8D" {{ old('area', $item->area ?? '') == 'KK8D' ? 'selected' : '' }}>KK8D</option>
+                            <option value="KK8F" {{ old('area', $item->area ?? '') == 'KK8F' ? 'selected' : '' }}>KK8F</option>
+                            <option value="KK8J" {{ old('area', $item->area ?? '') == 'KK8J' ? 'selected' : '' }}>KK8J</option>
+                            <option value="KK8J4" {{ old('area', $item->area ?? '') == 'KK8J4' ? 'selected' : '' }}>KK8J4</option>
+                            <option value="KK8J5" {{ old('area', $item->area ?? '') == 'KK8J5' ? 'selected' : '' }}>KK8J5</option>
+                            <option value="KK8J6" {{ old('area', $item->area ?? '') == 'KK8J6' ? 'selected' : '' }}>KK8J6</option>
+                            <option value="KK9D" {{ old('area', $item->area ?? '') == 'KK9D' ? 'selected' : '' }}>KK9D</option>
+                            <option value="KK10E" {{ old('area', $item->area ?? '') == 'KK10E' ? 'selected' : '' }}>KK10E</option>
+                            <option value="KK11M" {{ old('area', $item->area ?? '') == 'KK11M' ? 'selected' : '' }}>KK11M</option>
+                            <option value="KKMONITORING" {{ old('area', $item->area ?? '') == 'KKMONITORING' ? 'selected' : '' }}>KK MONITORING</option>
                         </select>
                     </div>
                     <div>
