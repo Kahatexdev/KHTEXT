@@ -1,6 +1,7 @@
 {{-- resources/views/kategori_kronologi/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Flow Proses')
+@section('page-title', 'Flow Proses')
 
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">

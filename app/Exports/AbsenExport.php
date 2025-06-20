@@ -43,7 +43,7 @@ class AbsenExport implements FromCollection, WithHeadings, WithStyles, WithTitle
     public function collection()
     {
         $users = User::with('absen')->get(); // Pastikan ada relasi 'absens' dan kolom 'bagian', 'kode_kartu', dll
-
+        
         $data = collect();
         $no = 1;
 
@@ -59,7 +59,22 @@ class AbsenExport implements FromCollection, WithHeadings, WithStyles, WithTitle
             for ($day = 1; $day <= 31; $day++) {
                 $tanggal = sprintf('%04d-%02d-%02d', $this->tahun, $this->bulan, $day);
                 $absen = $user->absen->firstWhere('tanggal', $tanggal);
-                $baris[$day] = $absen ? ($absen->jam_masuk ?? 'R') : 'R';
+
+                if ($absen) {
+                    // Jika keterangan 'Hadir', tampilkan jam_masuk (format 07:30), selain itu tampilkan keterangannya
+                    if (isset($absen->keterangan) && strtoupper($absen->keterangan) === 'HADIR') {
+                        if (!empty($absen->jam_masuk)) {
+                            $jamMasuk = date('H:i', strtotime($absen->jam_masuk));
+                            $baris[$day] = $jamMasuk;
+                        } else {
+                            $baris[$day] = 'R';
+                        }
+                    } else {
+                        $baris[$day] = $absen->keterangan;
+                    }
+                } else {
+                    $baris[$day] = 'R';
+                }
             }
 
             $data->push($baris);

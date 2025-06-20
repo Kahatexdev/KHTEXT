@@ -1,7 +1,7 @@
 {{-- resources/views/kategori_kronologi/index.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Kategori Kronologi')
-
+@section('page-title', 'Kategori Kronologi')
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -107,9 +107,9 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-        $('#kategoriTable').DataTable();
-    });
+        $(document).ready(function() {
+            $('#kategoriTable').DataTable();
+        });
         $(function() {
             const overlay = $('#modalOverlay');
             const form = $('#kategoriForm')[0];

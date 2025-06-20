@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Create Flow Proses')
+@section('page-title', 'Create Flow Proses')
 
 @section('content')
     <div class="w-full px-2 sm:px-4 py-4 mx-auto space-y-4">

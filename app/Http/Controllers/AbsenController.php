@@ -36,17 +36,35 @@ class AbsenController extends Controller
         // dd ($request->all());
         // Validasi input
         $request->validate([
-            'user_id' => 'required',
+            'id_user' => 'required',
             'tanggal' => 'required|date',
             'jam_masuk' => 'nullable',
             'keterangan' => 'nullable|string|max:255',
         ]);
 
+        if($request->tanggal > date('Y-m-d')) {
+            return redirect()->back()->withErrors(['error' => 'Tanggal tidak boleh lebih dari hari ini.']);
+        } 
+        // Periksa apakah absen untuk tanggal ini sudah ada
+        if (absen::where('id_user', $request->id_user)
+            ->whereDate('tanggal', $request->tanggal)
+            ->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Absen untuk tanggal ini sudah ada.']);
+        }
+        // Periksa apakah keterangan valid
+        if ($request->keterangan != 'HADIR') {
+            $request->validate([
+                'jam_masuk' => 'nullable',
+            ]);
+            $jam_masuk = null; // Set jam_masuk ke null jika keterangan tidak 'HADIR'
+        } else {
+            $jam_masuk = $request->jam_masuk; // Ambil jam masuk dari input
+        }
         // Simpan data absen
         $data = [
-            'id_user' => $request->user_id,
+            'id_user' => $request->id_user,
             'tanggal' => $request->tanggal,
-            'jam_masuk' => $request->jam_masuk,
+            'jam_masuk' => $jam_masuk,
             'keterangan' => $request->keterangan,
         ];
 
@@ -65,24 +83,49 @@ class AbsenController extends Controller
         // Logika untuk menampilkan form edit absen
         $absen = absen::findOrFail($id);
         $users = User::orderBy('name')->get();
-        return view('absen.edit', compact('absen', 'users'));
+        return response()->json([
+            'absen' => $absen,
+            'users' => $users,
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         // Validasi input
-        $data = $request->validate([
-            'id_user' => 'required|exists:users,id',
-            'id_employee' => 'required|integer',
-            'tanggal' => 'required|date',
-            'jam_masuk' => 'nullable|date_format:H:i:s',
+        $request->validate([
+            'id_user'    => 'required',
+            'tanggal'    => 'required|date',
+            'jam_masuk'  => 'nullable',
             'keterangan' => 'nullable|string|max:255',
         ]);
-
-        // Update data absen
+        // Temukan absen yang akan diupdate
         $absen = absen::findOrFail($id);
-        $absen->update($data);
-
+        
+        // Periksa apakah absen untuk tanggal ini sudah ada
+        $existingAbsen = absen::where('id_user', $request->id_user)
+            ->whereDate('tanggal', $request->tanggal)
+            ->where('id_absen', '!=', $id) // Pastikan tidak memeriksa absen yang sedang diupdate
+            ->first();
+        if ($existingAbsen) {
+            return redirect()->back()->withErrors(['error' => 'Absen untuk tanggal ini sudah ada.']);
+        }
+        // Periksa apakah keterangan valid
+        if ($request->keterangan != 'HADIR') {
+            $request->validate([
+                'jam_masuk' => 'nullable',
+            ]);
+            $jam_masuk = null; // Set jam_masuk ke null jika keterangan tidak 'HADIR'
+        } else {
+            $jam_masuk = $request->jam_masuk; // Ambil jam masuk dari input
+        }
+        // Update data absen
+        $updatedData = [
+            'id_user' => $request->id_user,
+            'tanggal' => $request->tanggal,
+            'jam_masuk' => $jam_masuk,
+            'keterangan' => $request->keterangan,
+        ];
+        $absen->update($updatedData);
         return redirect()->route('absen.index')->with('success', 'Absen berhasil diperbarui.');
     }
 
