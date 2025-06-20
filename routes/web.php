@@ -81,7 +81,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('auth')->prefix('bagian')->group(function () {
         Route::resource('mesin', TbCekqtyController::class)->except(['show']);
+        Route::get('mesin/edit/{id}', [TbCekqtyController::class, 'edit'])->name('mesin.edit');
+        Route::put('mesin/edit/{id}', [TbCekqtyController::class, 'update'])->name('mesin.update');
+        Route::delete('mesin/delete/{id}', [TbCekqtyController::class, 'destroy'])->name('mesin.destroy');
         Route::get('mesin/exportExcel', [TbCekqtyController::class, 'exportExcel'])->name('mesin.exportExcel');
+
         Route::get('mesin/inputErp', [TbCekqtyController::class, 'inputErp'])->name('mesin.inputErp');
         Route::get('mesin/inputErp/create', [TbCekqtyController::class, 'createInputErp'])->name('mesin.createInputErp');
         Route::post('mesin/inputErp/store', [TbCekqtyController::class, 'storeErp'])->name('inputErp.store');
